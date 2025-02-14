@@ -1,7 +1,7 @@
  package data.players;
 
 import data.cards.Card;
-import data.game.Hand;
+import data.players.Hand;
 import java.util.Random;
 
 public class BotPlayer extends Player {
