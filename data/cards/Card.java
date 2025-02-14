@@ -13,11 +13,6 @@ public class Card{
         this.imagePath = imagePath; // Le chemin de l'image associé à la carte
     }
 
-    public Card (int valeur, String couleur) {
-        this.number=valeur;
-        this.color=couleur;
-    }
-
     public int getNumber() {
         return number;
     }
