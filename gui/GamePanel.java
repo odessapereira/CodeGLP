@@ -21,7 +21,6 @@ public class GameTablePanel extends JPanel {
     private static final int START_Y = 300; // Position de départ de la main (cartes du joueur)
 
     private Hand hand;
-    private Image tableImage;  // Image de fond pour la table de jeu
 
     public GameTablePanel(Hand hand) {
         this.hand = hand;
