@@ -1,25 +1,29 @@
 package data.cards;
 
-public class Card{
+import java.util.List;
 
-    private final int number;
-    private final String color;
-
-    public Card (int valeur, String couleur) {
-        this.number=valeur;
-        this.color=couleur;
+public class Bomb extends Combinaison{
+    public Bomb(List<Card> cards) {
+        super(cards);
     }
 
-    public int getNumber() {
-        return number;
-    }
+    @Override
+    public boolean isValid() {
+        if (getCards().size() < 4) return false; // A bomb must have at least 4 cards
 
-    public String getColor() {
-        return color;
+        int value = getCards().get(0).getNumber();
+        for (Card card : getCards()) {
+            if (card.getNumber() != value) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return number+"de"+color ;
+        return "Bomb: " + getCards();
     }
 }
+
+
