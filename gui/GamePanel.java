@@ -12,7 +12,7 @@ import process.SimulationUtility;  // Classe qui permet de lire les images
  * This class represents the game table where the hand of the player is displayed
  * along with the green background representing the game table.
  * 
- * @author Odessa.Hamitouche
+ * @author Odessa
  */
 public class GameTablePanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -26,5 +26,4 @@ public class GameTablePanel extends JPanel {
     public GameTablePanel(Hand hand) {
         this.hand = hand;
         setBackground(Color.GREEN);  // La table de jeu est en vert
-        loadAssets();  // Charger l'image de la table si nécessaire
     }
