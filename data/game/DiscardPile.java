@@ -13,15 +13,15 @@ public class DiscardPile {
         this.playedCards = new Stack<>();
     }
 
-    public void addCard(Card card) {
-        playedCards.push(card);
-    }
-
-    public void addCards(Stack<Card> cards) {
-        while (!cards.isEmpty()) {
-            playedCards.push(cards.pop());
-        }
-    }
+//    public void addCard(Card card) {
+//        playedCards.push(card);
+//    }
+//
+//    public void addCards(Stack<Card> cards) {
+//        while (!cards.isEmpty()) {
+//            playedCards.push(cards.pop());
+//        }
+//    }
 
     public Card getLastCard() {
         return playedCards.isEmpty() ? null : playedCards.peek();

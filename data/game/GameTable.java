@@ -17,28 +17,28 @@ public class GameTable {
     }
 
     // Method to start the game or perform game-related operations
-    public void startGame() {
-        // Initialize the game (shuffle, distribute cards, etc.)
-        drawPile.shuffle();
-        // Other game setup tasks can be added here
-    }
+//    public void startGame() {
+//        // Initialize the game (shuffle, distribute cards, etc.)
+//        drawPile.shuffle();
+//        // Other game setup tasks can be added here
+//    }
 
     // Method for the player to draw a card from the draw pile
-    public void playerDrawCard() {
-        Card drawnCard = drawPile.drawCard();
-        if (drawnCard != null) {
-            player.addCardToHand(drawnCard);
-            System.out.println("Player drew a card: " + drawnCard);
-        } else {
-            System.out.println("The draw pile is empty!");
-        }
-    }
+//    public void playerDrawCard() {
+//        Card drawnCard = drawPile.drawCard();
+//        if (drawnCard != null) {
+//            player.addCardToHand(drawnCard);
+//            System.out.println("Player drew a card: " + drawnCard);
+//        } else {
+//            System.out.println("The draw pile is empty!");
+//        }
+//    }
 
     // Method for the player to discard a card to the discard pile
-    public void playerDiscardCard(Card card) {
-        discardPile.addCard(card);
-        System.out.println("Player discarded a card: " + card);
-    }
+//    public void playerDiscardCard(Card card) {
+//        discardPile.addCard(card);
+//        System.out.println("Player discarded a card: " + card);
+//    }
 
     // Getters and setters for the attributes
     public Player getPlayer() {

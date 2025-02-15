@@ -27,14 +27,14 @@ public class DrawPile {
     }
 
     // Add cards to the pile (This should only be done when initializing the pile, not during gameplay)
-    public void initializeCards(Stack<Card> cards) {
-        drawCards.addAll(cards);
-    }
+//    public void initializeCards(Stack<Card> cards) {
+//        drawCards.addAll(cards);
+//    }
 
     // Shuffle the cards in the pile
-    public void shuffle() {
-        Collections.shuffle(drawCards);
-    }
+//    public void shuffle() {
+//        Collections.shuffle(drawCards);
+//    }
 
     // Draw a card from the pile
     public Card drawCard() {
@@ -52,9 +52,9 @@ public class DrawPile {
     }
 
     // Clear the pile (should be used only when resetting the pile)
-    public void clear() {
-        drawCards.clear();
-    }
+//    public void clear() {
+//        drawCards.clear();
+//    }
 
     @Override
     public String toString() {
