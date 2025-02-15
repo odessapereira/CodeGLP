@@ -16,6 +16,10 @@ public class GameTable {
         this.discardPile = discardPile;
     }
 
+    public GameTable() {
+
+    }
+
     // Method to start the game or perform game-related operations
 //    public void startGame() {
 //        // Initialize the game (shuffle, distribute cards, etc.)
