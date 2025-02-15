@@ -4,8 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.List;
 
-import data.Card;
-import data.Hand;
+import data.cards.Card;
+import data.players.Hand;
 import process.SimulationUtility;  // Classe qui permet de lire les images
 
 /**

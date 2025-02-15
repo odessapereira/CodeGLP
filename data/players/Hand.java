@@ -40,10 +40,6 @@ public class Hand {
         return cards.size();
     }
 
-    // Get the number of remaining cards
-    public int getCardCount() {
-        return cards.size();
-    }
 
     // Get the list of cards in hand
     public List<Card> getCards() {

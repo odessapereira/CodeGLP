@@ -21,16 +21,6 @@ public abstract class Player {
     // Abstract method to be implemented by subclasses to perform actions with the player's hand
     public abstract void playTurn();
 
-    // Method to add a card to the player's hand
-    public void addCardToHand(Card card) {
-        hand.add(card);
-    }
-
-    // Method to remove a card from the player's hand
-    public void removeCardFromHand(Card card) {
-        hand.remove(card);
-    }
-
     // Getters and setters for the attributes
     public String getName() {
         return name;
