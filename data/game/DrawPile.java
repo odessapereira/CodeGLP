@@ -14,7 +14,7 @@ public class DrawPile {
     private Stack<Card> drawCards;
 
     // Private constructor to prevent the creation of other instances
-    private DrawPile() {
+    public DrawPile() {
         this.drawCards = new Stack<>();
     }
 
@@ -31,10 +31,10 @@ public class DrawPile {
 //        drawCards.addAll(cards);
 //    }
 
-    // Shuffle the cards in the pile
-//    public void shuffle() {
-//        Collections.shuffle(drawCards);
-//    }
+//     Shuffle the cards in the pile
+    public void shuffle() {
+        Collections.shuffle(drawCards);
+    }
 
     // Draw a card from the pile
     public Card drawCard() {
