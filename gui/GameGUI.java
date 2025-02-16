@@ -22,7 +22,7 @@ public class GameGUI extends JFrame {
     private final Color PLAYER_BACKGROUND_COLOR = new Color(34, 139, 34);
     private final Color TABLE_BACKGROUND_COLOR = new Color(18, 124, 18, 218);
 
-    public static final Dimension CARD_DIMENSION = new Dimension(71,96);
+    public static final Dimension CARD_DIMENSION = new Dimension(71,99);
 
     public GameGUI() {
         setTitle("Jeu de Cartes");
