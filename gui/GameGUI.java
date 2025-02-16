@@ -151,12 +151,8 @@ public class GameGUI extends JFrame {
         controlPanel.add(poser);
         controlPanel.add(piocher);
 //
-        piocher.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                drawCard();
-            }
-        });
+        piocher.addActionListener(new PiocherAction()); 
+            
 
         setVisible(true);
     }
@@ -179,7 +175,12 @@ public class GameGUI extends JFrame {
             playerArea.repaint();
         }
     }
-
+    class PiocherAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            drawCard();
+        }
+    }
     private void playCard(JLabel cardLabel) {
         playerArea.remove(cardLabel);
         discardPile.add(cardLabel);
