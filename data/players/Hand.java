@@ -48,7 +48,7 @@ public class Hand {
 
     // Display the cards in hand
     public void displayHand() {
-        System.out.println("🃏 Cards in hand:");
+        System.out.println("Cards in hand:");
         for (int i = 0; i < cards.size(); i++) {
             System.out.println((i + 1) + ". " + cards.get(i));
         }

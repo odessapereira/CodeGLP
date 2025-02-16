@@ -18,7 +18,7 @@ public class Serie extends Combinaison {
 
         for (int i = 1; i < getCards().size(); i++) {
             Card currentCard = getCards().get(i);
-            if ( currentCard.getNumber() != previousNumber + 1) {
+            if (!currentCard.getColor().equals(color) || currentCard.getNumber() != previousNumber + 1) {
                 return false;
             }
             previousNumber = currentCard.getNumber(); // Move to the next card

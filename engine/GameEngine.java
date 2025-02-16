@@ -13,37 +13,37 @@ import java.util.Optional;
 
 public class GameEngine {
 
-        private List<Player> players;
-        private DrawPile drawPile;
-        private DiscardPile discardPile;
-        private GameTable gameTable;
-        private int currentTurn;
-        private boolean isGameOver;
+    private List<Player> players;
+    private DrawPile drawPile;
+    private DiscardPile discardPile;
+    private GameTable gameTable;
+    private int currentTurn;
+    private boolean isGameOver;
 
-        public GameEngine(List<Player> players) {
-            this.players = players;
-            this.drawPile = new DrawPile();
-            this.discardPile = new DiscardPile();
-            this.gameTable = new GameTable();
-            this.currentTurn = 0;
-            this.isGameOver = false;
-        }
-        /**
-         * Initializes and starts the game.
-         */
-        public void startGame() {
-            initializeGame();
-            dealCards();
-        }
+    public GameEngine(List<Player> players) {
+        this.players = players;
+        this.drawPile = new DrawPile();
+        this.discardPile = new DiscardPile();
+        this.gameTable = new GameTable();
+        this.currentTurn = 0;
+        this.isGameOver = false;
+    }
+    /**
+     * Initializes and starts the game.
+     */
+    public void startGame() {
+        initializeGame();
+        dealCards();
+    }
 
-        /**
-         * Initializes the game state, setting up the deck, players, and starting conditions.
-         */
-        private void initializeGame() {
-            drawPile.shuffle();
-            currentTurn = 0;
-            isGameOver = false;
-        }
+    /**
+     * Initializes the game state, setting up the deck, players, and starting conditions.
+     */
+    private void initializeGame() {
+        drawPile.shuffle();
+        currentTurn = 0;
+        isGameOver = false;
+    }
 
     /**
      * Distributes cards to all players at the beginning of the game.
