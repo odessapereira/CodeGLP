@@ -1,4 +1,7 @@
 package gui;
+import data.cards.Card;
+import engine.CardsInteractions;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -14,7 +17,7 @@ public class GameGUI extends JFrame {
     private JPanel playArea;
 
     private PlayerPanel playerArea = new PlayerPanel("You");
-    private List<String> deck;
+    private List<Card> deck;
     private JPanel discardPile;
     private Random random;
 
@@ -31,15 +34,13 @@ public class GameGUI extends JFrame {
         setLayout(new BorderLayout());
 
         random = new Random();
-        deck = new ArrayList<>();
-        for (String card : new String[]{"2c.gif", "Jd.gif", "5h.gif", "9s.gif", "Qc.gif", "10c.gif", "Ah.gif", "Qs.gif", "7d.gif", "Kd.gif"}) {
-            deck.add(card);
-        }
+        deck = new ArrayList<Card>();
+//        for (String card : new String[]{"2c.gif", "Jd.gif", "5h.gif", "9s.gif", "Qc.gif", "10c.gif", "Ah.gif", "Qs.gif", "7d.gif", "Kd.gif", "10h.gif"}) {
+//            deck.add(card);
+//        }
 
 
-//        JPanel centerPanel = new JPanel();
         PlayerPanel leftPanel = new PlayerPanel("bot1");
-//        JPanel rightPanel = new JPanel();
         PlayerPanel rightPanel = new PlayerPanel("bot2");
         PlayerPanel northPanel = new PlayerPanel("bot3");
 
@@ -134,46 +135,26 @@ public class GameGUI extends JFrame {
 
         tablePanel.add(playArea, BorderLayout.CENTER);
 
-//
-//        // Zone des joueurs (cartes en main)
-//        playerArea = new JPanel();
-//        playerArea.setBackground(BACKGROUND_COLOR);
-//        playerArea.setBorder(BorderFactory.createTitledBorder("Cartes du joueur"));
-//        tablePanel.add(playerArea);
-//
-//        // Zone de la pioche et de la défausse
-//        JPanel deckPanel = new JPanel();
-//        deckPanel.setLayout(new GridLayout(1, 2, 10, 10));
-//        add(deckPanel, BorderLayout.EAST);
-//
+
         JButton poser = new JButton("Poser");
         JButton piocher = new JButton("Piocher");
         controlPanel.add(poser);
         controlPanel.add(piocher);
-//
-        piocher.addActionListener(new PiocherAction()); 
-            
+
+        piocher.addActionListener(new PiocherAction());
+
 
         setVisible(true);
     }
 
     private void drawCard() {
-        if (!deck.isEmpty()) {
-            String drawnCard = deck.remove(random.nextInt(deck.size()));
-            JLabel cardLabel = new JLabel(new ImageIcon("src/images/" + drawnCard));
-//            JLabel cardLabel = new JLabel("src/images/" + drawnCard);
-//            cardLabel.addMouseListener(new MouseAdapter() {
-//                @Override
-//                public void mouseClicked(MouseEvent e) {
-//                    playCard(cardLabel);
-//                    playCard(cardLabel);
-//                }
-//            });
+        CardsInteractions ci = new CardsInteractions();
+            Card randomCard = ci.getRandomCard();
+            JLabel cardLabel = new JLabel(new ImageIcon(randomCard.getImagePath()));
             playerArea.addCardLabel(cardLabel);
-//            playerArea.add(cardLabel);
             playerArea.revalidate();
             playerArea.repaint();
-        }
+//        }
     }
     class PiocherAction implements ActionListener {
         @Override
@@ -181,6 +162,8 @@ public class GameGUI extends JFrame {
             drawCard();
         }
     }
+
+
     private void playCard(JLabel cardLabel) {
         playerArea.remove(cardLabel);
         discardPile.add(cardLabel);
