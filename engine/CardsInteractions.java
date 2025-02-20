@@ -1,15 +1,18 @@
 package engine;
 
 import data.cards.Card;
+import data.players.Hand;
 
 import java.util.HashMap;
 import java.util.Random;
 
 public class CardsInteractions {
     private HashMap<String, Card> cards;
+    private Hand playerHarnd =new Hand();
 
     public CardsInteractions() {
         cards = new HashMap<>();
+        playerHarnd = new Hand();
         initializeCards();
     }
 
@@ -24,6 +27,14 @@ public class CardsInteractions {
                 cards.put(imagePath, card);
             }
         }
+    }
+
+    public Hand getPlayerHarnd() {
+        return playerHarnd;
+    }
+
+    public void setPlayerHarnd(Hand playerHarnd) {
+        this.playerHarnd = playerHarnd;
     }
 
     // Accesseur pour récupérer la carte à partir du chemin
@@ -42,6 +53,7 @@ public class CardsInteractions {
     }
 
     public Card getRandomCard (){
+
         Random random = new Random();
         // Générer un nombre aléatoire pour la valeur de la carte (entre 1 et 14)
         int cardValue = random.nextInt(14) + 1;
@@ -55,7 +67,13 @@ public class CardsInteractions {
 
         Card randomCard = cards.get("src/images/"+cardName);
 
+        //add cards to hand every time the player pioche
+        playerHarnd.addCard(randomCard);
+
         return randomCard;
     }
+
+
+
 
 }
