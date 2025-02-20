@@ -7,49 +7,55 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class PlayerPanel extends JPanel {
-    private JLabel playerInfoLabel;
+
     private JPanel cardsPanel;
-    private ArrayList<JLabel> cardLabels = new ArrayList<>();
-    private JLabel selectedCard; // ✅ Ajout d'un champ pour gérer la sélection
+    private ArrayList<CardPanel> cardPanels;
+    private CardPanel selectedCard;
 
     public PlayerPanel(String playerName) {
         setLayout(new BorderLayout());
         cardsPanel = new JPanel();
         cardsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-
         cardsPanel.setPreferredSize(new Dimension(800, 150));
         cardsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         cardsPanel.setBackground(null);
+        cardsPanel.setBorder(BorderFactory.createTitledBorder("Cartes du joueur"));
 
-        add(cardsPanel, BorderLayout.SOUTH);
+        add(cardsPanel, BorderLayout.SOUTH); // Ajout du panel des cartes
+        cardPanels = new ArrayList<>();
     }
 
-    public void addCardLabel(JLabel cardLabel) {
-        // Ajout de la carte à la main du joueur
-        cardsPanel.add(cardLabel);
-        cardLabels.add(cardLabel); // Ajout à la liste des cartes
+    public void addCardPanel(CardPanel cardPanel) {
+        cardsPanel.add(cardPanel);
+        cardsPanel.add(cardPanel);
+        cardsPanel.revalidate();
+        cardsPanel.repaint();
 
-        // Ajouter un écouteur de clic pour la sélection de la carte
-        cardLabel.addMouseListener(new MouseAdapter() {
+//         Ajouter un écouteur de clic pour la sélection de la carte
+        cardPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setSelectedCard(cardLabel); // Sélectionner la carte sur clic
+                setSelectedCard(cardPanel); // Sélectionner la carte sur clic
             }
         });
 
         cardsPanel.revalidate();
         cardsPanel.repaint();
+
+    }
+
+    public ArrayList<CardPanel> getCardLabels() {
+        return cardPanels;
     }
 
     public void clearCards() {
-        // Efface toutes les cartes de la main du joueur
+//        cardLabels.clear();
         cardsPanel.removeAll();
-        cardLabels.clear();
         revalidate();
         repaint();
     }
 
-    public void setSelectedCard(JLabel cardLabel) {
+    public void setSelectedCard(CardPanel cardLabel) {
         // Si une carte était déjà sélectionnée, la désélectionner
         if (selectedCard != null) {
             selectedCard.setBorder(null); // Retirer la bordure de l'ancienne sélection
@@ -60,10 +66,9 @@ public class PlayerPanel extends JPanel {
         selectedCard.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2)); // Ajout d'un cadre pour marquer la sélection
     }
 
-    public JLabel getSelectedCard() {
+    public CardPanel getSelectedCard() {
         return selectedCard; // Retourne la carte sélectionnée
     }
-
     public void clearSelection() {
         // Désélectionne la carte et retire la bordure
         if (selectedCard != null) {
