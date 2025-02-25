@@ -21,14 +21,6 @@ public class Hand {
         return cards.remove(card);
     }
 
-    // Play a card (returns the card and removes it from the hand)
-//    public Card playCard(int index) {
-//        if (index >= 0 && index < cards.size()) {
-//            return cards.remove(index);
-//        }
-//        System.out.println("❌ Invalid index!");
-//        return null;
-//    }
 
     // Check if the hand is empty
     public boolean isEmpty() {

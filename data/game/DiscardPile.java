@@ -13,9 +13,10 @@ public class DiscardPile {
         this.playedCards = new Stack<>();
     }
 
-//    public void addCard(Card card) {
-//        playedCards.push(card);
-//    }
+    public void addCard(Card card) {
+        playedCards.push(card);
+    }
+
 //
 //    public void addCards(Stack<Card> cards) {
 //        while (!cards.isEmpty()) {

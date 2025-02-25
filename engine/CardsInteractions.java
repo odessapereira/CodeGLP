@@ -55,8 +55,8 @@ public class CardsInteractions {
     public Card getRandomCard (){
 
         Random random = new Random();
-        // Générer un nombre aléatoire pour la valeur de la carte (entre 1 et 14)
-        int cardValue = random.nextInt(14) + 1;
+        // Générer un nombre aléatoire pour la valeur de la carte (entre 1 et 13)
+        int cardValue = random.nextInt(13) + 1;
 
         // Générer un nombre aléatoire pour la couleur parmi {c, d, h, s}
         String[] suits = {"c", "d", "h", "s"};
