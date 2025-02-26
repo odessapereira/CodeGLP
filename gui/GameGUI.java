@@ -1,6 +1,7 @@
 package gui;
 import data.cards.Card;
-import data.game.DiscardPile;
+import data.cards.*;
+import game.DiscardPile;
 import engine.CardsInteractions;
 
 import javax.swing.*;
@@ -172,23 +173,28 @@ public class GameGUI extends JFrame {
     class PoserAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            CardPanel selectedCard = playerArea.getSelectedCard();
-            if (selectedCard != null) {
-                // Retirer la carte de la main du joueur
-                playerArea.remove(selectedCard);
+            ArrayList<CardPanel> selectedCards = playerArea.getSelectedCard();
+            if (selectedCards != null && !selectedCards.isEmpty()) {
+                // Retirer les cartes de la main du joueur
+                for (CardPanel card : selectedCards) {
+                    playerArea.remove(card);
+                }
                 playerArea.revalidate();
                 playerArea.repaint();
 
-                // Ajouter seulement la carte posée dans la zone de jeu (playArea)
-                playCard(selectedCard);
-                playerArea.clearSelection(); // ✅ Désélectionner après avoir posé
+                // Ajouter les cartes posées dans la zone de jeu (playArea)
+                playCard(selectedCards);
+                playerArea.clearSelection(); // Désélectionner après avoir posé
             }
         }
     }
 
-    private void playCard(CardPanel cardPanel) {
+
+    private void playCard(ArrayList<CardPanel> selectedCards) {
         discardPileContainer.removeAll();
-        discardPileContainer.add(cardPanel, BorderLayout.CENTER);
+        for(CardPanel c: selectedCards) {
+        discardPileContainer.add(c, BorderLayout.CENTER);
+        }
 //        discardPile.add(drawPile, BorderLayout.NORTH);
 //        discardPile.add(discardPile, BorderLayout.SOUTH);
 //        discardPile
