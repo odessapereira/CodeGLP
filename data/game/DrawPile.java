@@ -26,10 +26,6 @@ public class DrawPile {
         return instance;
     }
 
-    // Add cards to the pile (This should only be done when initializing the pile, not during gameplay)
-//    public void initializeCards(Stack<Card> cards) {
-//        drawCards.addAll(cards);
-//    }
 
 //     Shuffle the cards in the pile
     public void shuffle() {

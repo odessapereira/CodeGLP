@@ -7,6 +7,7 @@ import java.awt.*;
 
 class CardPanel extends JPanel {
     private Image image;
+    private static String hiddenCard="./images/hidenCard.jpeg";
 
     public CardPanel(String imagePath) {
         this.image = new ImageIcon(imagePath).getImage();

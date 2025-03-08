@@ -40,7 +40,6 @@ public class GameEngine {
      * Initializes the game state, setting up the deck, players, and starting conditions.
      */
     private void initializeGame() {
-        drawPile.shuffle();
         currentTurn = 0;
         isGameOver = false;
     }

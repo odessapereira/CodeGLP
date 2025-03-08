@@ -1,7 +1,6 @@
 package gui;
 import data.cards.Card;
-import data.cards.*;
-import game.DiscardPile;
+import data.game.DiscardPile;
 import engine.CardsInteractions;
 
 import javax.swing.*;
@@ -97,16 +96,12 @@ public class GameGUI extends JFrame {
 
 
         JPanel drawPileContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
-//        JPanel discardPileContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         JPanel drawPile = new JPanel();
         discardPileContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-//        drawPile.setPreferredSize(new Dimension(70,110));
-//        discardPilePanels.setPreferredSize(CARD_DIMENSION);
 
         drawPile.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-//        discardPilePanels.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         drawPileContainer.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.BLACK, 0), // Bordure visible
@@ -119,8 +114,6 @@ public class GameGUI extends JFrame {
 
 
         drawPile.setBackground(Color.WHITE);
-//        discardPilePanels.setBackground(Color.WHITE);
-//        drawPile.add(new CardPanel("src/images/hiddenCard.jpeg"));
 
         drawPileContainer.setBackground(null);
         discardPileContainer.setBackground(null);
@@ -129,9 +122,6 @@ public class GameGUI extends JFrame {
         discardPileContainer.setPreferredSize(new Dimension(200,300));
 
         drawPileContainer.add(new CardPanel("src/images/hiddenCard.jpeg"));
-//        drawPileContainer.add(drawPile);
-//        discardPileContainer.add(new JLabel("Discard Pile"));
-//        discardPileContainer.add(discardPilePanels);
 
         playArea.add(drawPileContainer, BorderLayout.NORTH);
         playArea.add(discardPileContainer, BorderLayout.SOUTH);
@@ -173,31 +163,23 @@ public class GameGUI extends JFrame {
     class PoserAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ArrayList<CardPanel> selectedCards = playerArea.getSelectedCard();
-            if (selectedCards != null && !selectedCards.isEmpty()) {
-                // Retirer les cartes de la main du joueur
-                for (CardPanel card : selectedCards) {
-                    playerArea.remove(card);
-                }
+            CardPanel selectedCard = playerArea.getSelectedCard();
+            if (selectedCard != null) {
+                // Retirer la carte de la main du joueur
+                playerArea.remove(selectedCard);
                 playerArea.revalidate();
                 playerArea.repaint();
 
-                // Ajouter les cartes posées dans la zone de jeu (playArea)
-                playCard(selectedCards);
-                playerArea.clearSelection(); // Désélectionner après avoir posé
+                // Ajouter seulement la carte posée dans la zone de jeu (playArea)
+                playCard(selectedCard);
+                playerArea.clearSelection(); // ✅ Désélectionner après avoir posé
             }
         }
     }
 
-
-    private void playCard(ArrayList<CardPanel> selectedCards) {
+    private void playCard(CardPanel cardPanel) {
         discardPileContainer.removeAll();
-        for(CardPanel c: selectedCards) {
-        discardPileContainer.add(c, BorderLayout.CENTER);
-        }
-//        discardPile.add(drawPile, BorderLayout.NORTH);
-//        discardPile.add(discardPile, BorderLayout.SOUTH);
-//        discardPile
+        discardPileContainer.add(cardPanel, BorderLayout.CENTER);
         discardPileContainer.revalidate();
         discardPileContainer.repaint();
     }
