@@ -1,12 +1,15 @@
 package gui;
 import data.cards.Card;
 import engine.CardsInteractions;
+import engine.CombinationChecker;
+import data.cards.Combinaison;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class GameGUI extends JFrame {
@@ -127,7 +130,15 @@ public class GameGUI extends JFrame {
         drawPileContainer.setPreferredSize(new Dimension(200,300));
         discardPileContainer.setPreferredSize(new Dimension(200,300));
 
-        drawPileContainer.add(new CardPanel("src/images/hiddenCard.jpeg"));
+     // Créer un objet Card pour la carte cachée
+        Card hiddenCard = new Card(-1, "hidden", "src/images/hiddenCard.jpeg");
+
+        // Créer un CardPanel en utilisant l'objet Card
+        CardPanel hiddenCardPanel = new CardPanel(hiddenCard);
+
+        // Ajouter le CardPanel au container de la pioche
+        drawPileContainer.add(hiddenCardPanel);
+
 
         playArea.add(drawPileContainer, BorderLayout.NORTH);
         playArea.add(discardPileContainer, BorderLayout.SOUTH);
@@ -151,15 +162,25 @@ public class GameGUI extends JFrame {
     }
 
     private void drawCard() {
+        // Récupérer une carte aléatoire
         Card randomCard = ci.getRandomCard();
-        CardPanel cardPanel = new CardPanel(randomCard.getImagePath()); // Utilisation de CardPanel
+
+        // Créer un CardPanel à partir de l'objet Card
+        CardPanel cardPanel = new CardPanel(randomCard);  // Utilisation du constructeur de CardPanel qui prend un objet Card
+
+        // Retirer la carte du paquet
         ci.removeCard(randomCard.getImagePath());
-        deck.put(randomCard, cardPanel); // Stocker la carte sous forme de CardPanel
-        playerArea.addCardPanel(cardPanel); // Ajouter la carte au joueur
+
+        // Stocker la carte dans le deck (HashMap)
+        deck.put(randomCard, cardPanel);
+
+        // Ajouter le CardPanel à la zone du joueur
+        playerArea.addCardPanel(cardPanel);
+        
+        // Recalculer la mise en page pour afficher la nouvelle carte
         playerArea.revalidate();
         playerArea.repaint();
     }
-
 
     class PiocherAction implements ActionListener {
         @Override
@@ -174,10 +195,38 @@ public class GameGUI extends JFrame {
             ArrayList<CardPanel> selectedCards = playerArea.getSelectedCards();
             if (!selectedCards.isEmpty()) {
 
-                playCard(selectedCards); // ✅ Ajouter la carte posée dans la zone de jeu
+                // Si une seule carte est sélectionnée, on la pose directement
+                if (selectedCards.size() == 1) {
+                    playCard(selectedCards);  // Ajouter la carte dans la zone de jeu sans validation
+                    labelMessage.setText("✅ Une seule carte posée.");
+                } else {
+                    // Conversion des CardPanel en Card pour la vérification
+                	ArrayList<Card> cards = selectedCards.stream()
+                		    .map(cardPanel -> {
+                		        // Créer une Card avec le numéro et la couleur qui sont stockés dans CardPanel
+                		        return new Card(cardPanel.getCardNumber(), cardPanel.getCardColor(), cardPanel.getImagePath());
+                		    })
+                		    .collect(Collectors.toCollection(ArrayList::new));
+
+                	System.out.println("Cartes à valider : " + cards); // Vérifie les cartes avant validation
+
+                    // Vérifier la combinaison pour plusieurs cartes
+                    Combinaison combinaison = CombinationChecker.getValidCombination(cards);
+
+                    if (combinaison != null) {
+                        // Si la combinaison est valide
+                        playCard(selectedCards);
+                        labelMessage.setText("✅ Combinaison valide : " + combinaison.toString());
+                    } else {
+                        // Si la combinaison est invalide
+                        labelMessage.setText("❌ Combinaison invalide !");
+                    }
+                }
+
+                // Désélectionner les cartes après avoir tenté de poser
+                playerArea.clearSelection();
                 playerArea.revalidate();
                 playerArea.repaint();
-                playerArea.clearSelection(); // ✅ Désélectionner après avoir posé
             }
         }
     }
