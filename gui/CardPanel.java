@@ -1,17 +1,34 @@
 package gui;
 
-import data.cards.Card;
+import cards.Card;
 
 import javax.swing.*;
 import java.awt.*;
 
-class CardPanel extends JPanel {
+public class CardPanel extends JPanel {
     private Image image;
-    private static String hiddenCard="./images/hidenCard.jpeg";
+    private String imagePath;
+    private int cardNumber;  // Numéro de la carte
+    private String cardColor; // Couleur de la carte
 
-    public CardPanel(String imagePath) {
+    public CardPanel(Card card) {
+        this.cardNumber = card.getNumber();
+        this.cardColor = card.getColor();
+        this.imagePath = card.getImagePath();
         this.image = new ImageIcon(imagePath).getImage();
-        setPreferredSize(GameGUI.CARD_DIMENSION);
+        setPreferredSize(GameGUI.CARD_DIMENSION);  // Taille de la carte
+    }
+
+    public int getCardNumber() {
+        return cardNumber;
+    }
+
+    public String getCardColor() {
+        return cardColor;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 
     @Override
