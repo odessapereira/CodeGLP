@@ -1,7 +1,6 @@
 package data.cards;
 
 import java.util.List;
-import java.util.Collections;
 
 public class Serie extends Combinaison {
 
@@ -11,23 +10,31 @@ public class Serie extends Combinaison {
 
     @Override
     public boolean isValid() {
-        if (getCards().size() < 3) return false; // At least 3 cards required
+        if (getCards() == null || getCards().size() < 3) return false; // Vérifie que la liste n'est pas nulle et qu'il y a au moins 3 cartes
 
-        String color = getCards().get(0).getColor();
+        // Tri des cartes par numéro croissant
+        getCards().sort((c1, c2) -> Integer.compare(c1.getNumber(), c2.getNumber()));
+
         int previousNumber = getCards().get(0).getNumber();
 
         for (int i = 1; i < getCards().size(); i++) {
             Card currentCard = getCards().get(i);
-            if (!currentCard.getColor().equals(color) || currentCard.getNumber() != previousNumber + 1) {
+
+            // Vérifie que les numéros des cartes sont consécutifs
+            if (currentCard.getNumber() != previousNumber + 1) {
                 return false;
             }
-            previousNumber = currentCard.getNumber(); // Move to the next card
+
+            // Mise à jour du numéro précédent pour la prochaine comparaison
+            previousNumber = currentCard.getNumber();
         }
+
+        // Si tout est valide, retourne true
         return true;
     }
 
     @Override
     public String toString() {
-        return "Series: " + getCards();
+        return "Série: " + getCards();
     }
 }
