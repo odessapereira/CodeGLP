@@ -1,28 +1,24 @@
 package gui;
 import data.cards.Card;
-import data.game.DiscardPile;
 import engine.CardsInteractions;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.*;
-import java.util.List;
+
 
 public class GameGUI extends JFrame {
 
     private JPanel playArea;
     private PlayerPanel playerArea;
     private HashMap<Card,CardPanel> deck;
-//    private JPanel discardPilePanels;
     private JPanel discardPileContainer;
     private Stack discardPile;
     private JPanel drawPile;
     private CardsInteractions ci;
+    private JLabel labelMessage;
 
     private final Color BACKGROUND_COLOR = new Color(11, 167, 53);
     private final Color PLAYER_BACKGROUND_COLOR = new Color(34, 139, 34);
@@ -73,10 +69,18 @@ public class GameGUI extends JFrame {
         playerArea.setBackground(BACKGROUND_COLOR);
 //        playerArea.setBorder(BorderFactory.createTitledBorder("Cartes du joueur"));
 
+        // Création du JLabel pour afficher le message
+        labelMessage = new JLabel("Selectionner pour savoir la combinaison");
+        labelMessage.setFont(new Font("Arial", Font.PLAIN, 12));
+        labelMessage.setBounds(10, 10, 200, 20);  // Positionner en haut à gauche
+
+        //Panel with buttons
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         controlPanel.setBackground(null);
         playerArea.add(controlPanel, BorderLayout.NORTH);
         playerArea.setBackground(PLAYER_BACKGROUND_COLOR);
+        playerArea.add(labelMessage, BorderLayout.EAST);
+
 
 
         // Création du panneau principal (table de jeu)
@@ -84,6 +88,8 @@ public class GameGUI extends JFrame {
         tablePanel.setBackground(new Color(34, 139, 34)); // Vert comme une table de jeu
         tablePanel.setLayout(new GridLayout(1, 1, 10, 10));
         add(tablePanel, BorderLayout.CENTER);
+
+
 
 
         // Zone de jeu où les cartes sont posées
@@ -140,6 +146,9 @@ public class GameGUI extends JFrame {
 
         setVisible(true);
     }
+    private JLabel setLabelMessage(){
+        return setLabelMessage();
+    }
 
     private void drawCard() {
         Card randomCard = ci.getRandomCard();
@@ -159,31 +168,28 @@ public class GameGUI extends JFrame {
         }
     }
 
-
     class PoserAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            CardPanel selectedCard = playerArea.getSelectedCard();
-            if (selectedCard != null) {
-                // Retirer la carte de la main du joueur
-                playerArea.remove(selectedCard);
+            ArrayList<CardPanel> selectedCards = playerArea.getSelectedCards();
+            if (!selectedCards.isEmpty()) {
+
+                playCard(selectedCards); // ✅ Ajouter la carte posée dans la zone de jeu
                 playerArea.revalidate();
                 playerArea.repaint();
-
-                // Ajouter seulement la carte posée dans la zone de jeu (playArea)
-                playCard(selectedCard);
                 playerArea.clearSelection(); // ✅ Désélectionner après avoir posé
             }
         }
     }
 
-    private void playCard(CardPanel cardPanel) {
+    private void playCard(ArrayList<CardPanel> selectedCards) {
         discardPileContainer.removeAll();
-        discardPileContainer.add(cardPanel, BorderLayout.CENTER);
+        for (CardPanel card : selectedCards) {
+            discardPileContainer.add(card, BorderLayout.CENTER);
+        }
         discardPileContainer.revalidate();
         discardPileContainer.repaint();
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GameGUI::new);

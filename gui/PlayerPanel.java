@@ -1,16 +1,21 @@
 package gui;
 
+import data.cards.Serie;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerPanel extends JPanel {
 
     private JPanel cardsPanel;
     private ArrayList<CardPanel> cardPanels;
-    private CardPanel selectedCard;
+    private ArrayList<CardPanel> selectedCards;
+    private Serie serie;
+
 
 
     public PlayerPanel(String playerName) {
@@ -24,6 +29,7 @@ public class PlayerPanel extends JPanel {
 
         add(cardsPanel, BorderLayout.SOUTH); // Ajout du panel des cartes
         cardPanels = new ArrayList<>();
+        selectedCards = new ArrayList<>();
     }
 
     public void addCardPanel(CardPanel cardPanel) {
@@ -45,38 +51,39 @@ public class PlayerPanel extends JPanel {
 
     }
 
-    public ArrayList<CardPanel> getCardLabels() {
-        return cardPanels;
-    }
 
-    public void clearCards() {
-//        cardLabels.clear();
-        cardsPanel.removeAll();
-        revalidate();
-        repaint();
-    }
 
     public void setSelectedCard(CardPanel cardLabel) {
-        // Si une carte était déjà sélectionnée, la désélectionner
-        if (selectedCard != null) {
-            selectedCard.setBorder(null); // Retirer la bordure de l'ancienne sélection
+        if (selectedCards.contains(cardLabel)) {
+            // Si la carte est déjà sélectionnée, la désélectionner
+            cardLabel.setBorder(null);
+            selectedCards.remove(cardLabel);
+        } else {
+            // Sélectionner la nouvelle carte
+            selectedCards.add(cardLabel);
+            cardLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
+
         }
-
-        // Sélectionner la nouvelle carte
-        selectedCard = cardLabel;
-        selectedCard.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2)); // Ajout d'un cadre pour marquer la sélection
     }
 
-    
 
-    public CardPanel getSelectedCard() {
-        return selectedCard; // Retourne la carte sélectionnée
+    public ArrayList<CardPanel> getSelectedCards() {
+        return selectedCards; // Retourne la carte sélectionnée
     }
+
+
     public void clearSelection() {
-        // Désélectionne la carte et retire la bordure
-        if (selectedCard != null) {
-            selectedCard.setBorder(null);
-            selectedCard = null;
+        if (selectedCards != null) {
+            for (CardPanel card : selectedCards) {
+                card.setBorder(null); // Retire la bordure de chaque carte sélectionnée
+            }
+            selectedCards.clear(); // Vide la liste des cartes sélectionnées
         }
     }
+
+
+
+
+
+
 }
