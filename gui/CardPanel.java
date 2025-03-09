@@ -1,6 +1,6 @@
 package gui;
 
-import cards.Card;
+import data.cards.Card;
 
 import javax.swing.*;
 import java.awt.*;
