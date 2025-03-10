@@ -81,13 +81,19 @@ public class PlayerPanel extends JPanel {
 
         }
         String combinaison = " ";
-        if (isSerie(selectedCards)){
-                combinaison ="une serie";
-                labelMessage.setText("Combinaison : "+combinaison);
-        }if (isdouble(selectedCards)){
+        ArrayList<Card> cards = new ArrayList<>(selectedCards.values());// Récupère uniquement les cartes
+
+        Serie serie = new Serie(cards);
+        Bomb bomb = new Bomb(cards);
+        DoubleCard doubleCards = new DoubleCard(cards);
+
+        if (serie.isValid()){
+            combinaison ="une serie";
+            labelMessage.setText("Combinaison : "+combinaison);
+        }if (doubleCards.isValid()){
             combinaison="double";
             labelMessage.setText("Combinaison : "+combinaison);
-        }if (isBomb(selectedCards)){
+        }if (bomb.isValid()){
             combinaison="Bombe ";
             labelMessage.setText("Combinaison : "+combinaison);
         }
@@ -123,34 +129,6 @@ public class PlayerPanel extends JPanel {
     public ArrayList<Card> getCardCombianison() {
         return cardCombianison;
     }
-
-    public boolean isSerie(HashMap<CardPanel, Card> cardCombination) {
-        ArrayList<Card> cards = new ArrayList<>(cardCombination.values()); // Récupère uniquement les cartes
-        Serie serie = new Serie(cards); // Crée une instance de Serie
-        return serie.isValid(); // Vérifie si c'est une série
-    }
-
-    public boolean isdouble(HashMap<CardPanel, Card> cardCombination) {
-        ArrayList<Card> cards = new ArrayList<>(cardCombination.values()); // Récupère uniquement les cartes
-        DoubleCard doubleCard = new DoubleCard(cards); // Crée une instance de
-        return doubleCard.isValid(); // Vérifie si c'est un double
-    }
-
-    public boolean isBomb(HashMap<CardPanel, Card> cardCombination) {
-        ArrayList<Card> cards = new ArrayList<>(cardCombination.values()); // Récupère uniquement les cartes
-        Bomb bomb = new Bomb(cards);
-        return bomb.isValid();
-    }
-
-
+    
 
 }
-
-
-
-
-
-
-
-
-
