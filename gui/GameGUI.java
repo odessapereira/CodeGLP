@@ -1,27 +1,24 @@
 package gui;
 import data.cards.Card;
-import engine.CardsInteractions;
-import engine.CombinationChecker;
 import data.cards.Combinaison;
+import engine.CardsInteractions;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class GameGUI extends JFrame {
 
     private JPanel playArea;
     private PlayerPanel playerArea;
-    private HashMap<Card,CardPanel> deck;
+    private HashMap<CardPanel,Card> deck;
     private JPanel discardPileContainer;
     private Stack discardPile;
     private JPanel drawPile;
     private CardsInteractions ci;
-    private JLabel labelMessage;
 
     private final Color BACKGROUND_COLOR = new Color(11, 167, 53);
     private final Color PLAYER_BACKGROUND_COLOR = new Color(34, 139, 34);
@@ -35,8 +32,8 @@ public class GameGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        ci = new CardsInteractions();
-        deck = new HashMap<Card,CardPanel>();
+        ci = CardsInteractions.getInstance();
+        deck = new HashMap<CardPanel,Card>();
         discardPile = new Stack();
         playerArea = new PlayerPanel("You");
 
@@ -72,17 +69,14 @@ public class GameGUI extends JFrame {
         playerArea.setBackground(BACKGROUND_COLOR);
 //        playerArea.setBorder(BorderFactory.createTitledBorder("Cartes du joueur"));
 
-        // Création du JLabel pour afficher le message
-        labelMessage = new JLabel("Selectionner pour savoir la combinaison");
-        labelMessage.setFont(new Font("Arial", Font.PLAIN, 12));
-        labelMessage.setBounds(10, 10, 200, 20);  // Positionner en haut à gauche
+        // Positionner en haut à gauche
 
         //Panel with buttons
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         controlPanel.setBackground(null);
         playerArea.add(controlPanel, BorderLayout.NORTH);
         playerArea.setBackground(PLAYER_BACKGROUND_COLOR);
-        playerArea.add(labelMessage, BorderLayout.EAST);
+//        playerArea.add(labelMessage, BorderLayout.EAST);
 
 
 
@@ -122,6 +116,7 @@ public class GameGUI extends JFrame {
         ));
 
 
+
         drawPile.setBackground(Color.WHITE);
 
         drawPileContainer.setBackground(null);
@@ -130,15 +125,7 @@ public class GameGUI extends JFrame {
         drawPileContainer.setPreferredSize(new Dimension(200,300));
         discardPileContainer.setPreferredSize(new Dimension(200,300));
 
-     // Créer un objet Card pour la carte cachée
-        Card hiddenCard = new Card(-1, "hidden", "src/images/hiddenCard.jpeg");
-
-        // Créer un CardPanel en utilisant l'objet Card
-        CardPanel hiddenCardPanel = new CardPanel(hiddenCard);
-
-        // Ajouter le CardPanel au container de la pioche
-        drawPileContainer.add(hiddenCardPanel);
-
+        drawPileContainer.add(new CardPanel("src/images/hiddenCard.jpeg"));
 
         playArea.add(drawPileContainer, BorderLayout.NORTH);
         playArea.add(discardPileContainer, BorderLayout.SOUTH);
@@ -162,25 +149,20 @@ public class GameGUI extends JFrame {
     }
 
     private void drawCard() {
-        // Récupérer une carte aléatoire
         Card randomCard = ci.getRandomCard();
-
-        // Créer un CardPanel à partir de l'objet Card
-        CardPanel cardPanel = new CardPanel(randomCard);  // Utilisation du constructeur de CardPanel qui prend un objet Card
-
-        // Retirer la carte du paquet
+        CardPanel cardPanel = new CardPanel(randomCard.getImagePath()); // Utilisation de CardPanel
         ci.removeCard(randomCard.getImagePath());
 
-        // Stocker la carte dans le deck (HashMap)
-        deck.put(randomCard, cardPanel);
+        deck.put(cardPanel,randomCard); // Stocker la carte sous forme de CardPanel
 
-        // Ajouter le CardPanel à la zone du joueur
-        playerArea.addCardPanel(cardPanel);
-        
-        // Recalculer la mise en page pour afficher la nouvelle carte
+        playerArea.addCardPanel(cardPanel,randomCard); // Ajouter la carte au joueur
         playerArea.revalidate();
         playerArea.repaint();
+
+        //ajouter la carte a la main
+        ci.AddCardHand(randomCard);
     }
+
 
     class PiocherAction implements ActionListener {
         @Override
@@ -192,53 +174,35 @@ public class GameGUI extends JFrame {
     class PoserAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ArrayList<CardPanel> selectedCards = playerArea.getSelectedCards();
+            HashMap<CardPanel,Card> selectedCards = playerArea.getSelectedCards();
+
             if (!selectedCards.isEmpty()) {
 
-                // Si une seule carte est sélectionnée, on la pose directement
-                if (selectedCards.size() == 1) {
-                    playCard(selectedCards);  // Ajouter la carte dans la zone de jeu sans validation
-                    labelMessage.setText("✅ Une seule carte posée.");
-                } else {
-                    // Conversion des CardPanel en Card pour la vérification
-                	ArrayList<Card> cards = selectedCards.stream()
-                		    .map(cardPanel -> {
-                		        // Créer une Card avec le numéro et la couleur qui sont stockés dans CardPanel
-                		        return new Card(cardPanel.getCardNumber(), cardPanel.getCardColor(), cardPanel.getImagePath());
-                		    })
-                		    .collect(Collectors.toCollection(ArrayList::new));
-
-                	System.out.println("Cartes à valider : " + cards); // Vérifie les cartes avant validation
-
-                    // Vérifier la combinaison pour plusieurs cartes
-                    Combinaison combinaison = CombinationChecker.getValidCombination(cards);
-
-                    if (combinaison != null) {
-                        // Si la combinaison est valide
-                        playCard(selectedCards);
-                        labelMessage.setText("✅ Combinaison valide : " + combinaison.toString());
-                    } else {
-                        // Si la combinaison est invalide
-                        labelMessage.setText("❌ Combinaison invalide !");
-                    }
-                }
-
-                // Désélectionner les cartes après avoir tenté de poser
-                playerArea.clearSelection();
+                playCard(selectedCards); // Ajouter la carte posée dans la zone de jeu
                 playerArea.revalidate();
                 playerArea.repaint();
+                playerArea.clearSelection(); // Désélectionner après avoir posé
             }
         }
     }
 
-    private void playCard(ArrayList<CardPanel> selectedCards) {
-        discardPileContainer.removeAll();
-        for (CardPanel card : selectedCards) {
-            discardPileContainer.add(card, BorderLayout.CENTER);
+    private void playCard(HashMap<CardPanel, Card> selectedCards) {
+        discardPileContainer.removeAll(); // Vide la pile de défausse
+
+        for (CardPanel cardPanel : selectedCards.keySet()) { // Parcourt les clés de la HashMap
+            discardPileContainer.add(cardPanel, BorderLayout.CENTER); // Ajoute chaque carte à la défausse
         }
-        discardPileContainer.revalidate();
+
+        discardPileContainer.revalidate(); // Met à jour l'affichage
         discardPileContainer.repaint();
     }
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GameGUI::new);

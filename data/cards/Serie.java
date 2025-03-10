@@ -1,40 +1,42 @@
 package data.cards;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Serie extends Combinaison {
 
-    public Serie(List<Card> cards) {
+    public Serie(ArrayList<Card> cards) {
         super(cards);
     }
 
     @Override
     public boolean isValid() {
-        if (getCards() == null || getCards().size() < 3) return false; // Vérifie que la liste n'est pas nulle et qu'il y a au moins 3 cartes
+        List<Card> cards = getCards(); // Récupérer la liste des cartes
 
-        // Tri des cartes par numéro croissant
-        getCards().sort((c1, c2) -> Integer.compare(c1.getNumber(), c2.getNumber()));
+        if (cards.size() < 3) return false; // Au moins 3 cartes requises
 
-        int previousNumber = getCards().get(0).getNumber();
+        // Trier les cartes par ordre croissant de numéro
+        Collections.sort(cards, Comparator.comparingInt(Card::getNumber));
 
-        for (int i = 1; i < getCards().size(); i++) {
-            Card currentCard = getCards().get(i);
+        int expectedNumber = cards.get(0).getNumber(); // Numéro attendu (début de la séquence)
 
-            // Vérifie que les numéros des cartes sont consécutifs
-            if (currentCard.getNumber() != previousNumber + 1) {
-                return false;
+        // Vérification de la séquence
+        for (int i = 1; i < cards.size(); i++) {
+            Card currentCard = cards.get(i);
+            if ( currentCard.getNumber() != expectedNumber + 1) {
+                return false; // rupture de séquence
             }
-
-            // Mise à jour du numéro précédent pour la prochaine comparaison
-            previousNumber = currentCard.getNumber();
+            expectedNumber++; // Passer au prochain numéro attendu
         }
 
-        // Si tout est valide, retourne true
-        return true;
+        return true; // Si toutes les conditions sont remplies, c'est une série valide
     }
+
 
     @Override
     public String toString() {
-        return "Série: " + getCards();
+        return "Series: " + getCards();
     }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private List<Card> cards; // List of cards in the player's hand
+    private ArrayList<Card> cards; // List of cards in the player's hand
 
     public Hand() {
         this.cards = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Hand {
 
 
     // Get the list of cards in hand
-    public List<Card> getCards() {
+    public ArrayList<Card> getCards() {
         return new ArrayList<>(cards); // Returns a copy to avoid external modifications
     }
 

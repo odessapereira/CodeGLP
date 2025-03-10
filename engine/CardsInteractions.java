@@ -7,37 +7,51 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class CardsInteractions {
+    private static CardsInteractions instance; // Instance unique du Singleton
     private HashMap<String, Card> cards;
-    private Hand playerHarnd =new Hand();
+    private Hand playerHand;
 
-    public CardsInteractions() {
+    // Constructeur privé pour empêcher l'instanciation externe
+    private CardsInteractions() {
         cards = new HashMap<>();
-        playerHarnd = new Hand();
-        initializeCards();
+        playerHand = new Hand();
+        initializeCards(); // Initialisation unique des cartes
     }
 
-    // Méthode pour initialiser la HashMap avec les cartes
-    private void initializeCards() {
-        String[] suits = {"c", "d", "h", "s"}; // c = coeur, d = carreau, h = trèfle, s = pique
+    // Méthode pour récupérer l'instance unique
+    public static synchronized CardsInteractions getInstance() {
+        if (instance == null) {
+            instance = new CardsInteractions();
+        }
+        return instance;
+    }
 
-        for (int number=1;number<15;number++) {
+    // Méthode pour initialiser la HashMap avec les cartes (appelée une seule fois)
+    private void initializeCards() {
+        String[] suits = {"c", "d", "h", "s"}; // c = cœur, d = carreau, h = trèfle, s = pique
+
+        for (int number = 1; number < 15; number++) {
             for (String suit : suits) {
-                String imagePath = "src/images/" + number + suit + ".gif";  // Chemin d'image, ajuster selon ton répertoire
+                String imagePath = "src/images/" + number + suit + ".gif"; // Chemin de l'image
                 Card card = new Card(number, suit, imagePath);
                 cards.put(imagePath, card);
             }
         }
     }
 
-    public Hand getPlayerHarnd() {
-        return playerHarnd;
+    public Hand getPlayerHand() {
+        return playerHand;
     }
 
-    public void setPlayerHarnd(Hand playerHarnd) {
-        this.playerHarnd = playerHarnd;
+    public void AddCardHand(Card card){
+        playerHand.addCard(card);
     }
 
-    // Accesseur pour récupérer la carte à partir du chemin
+    public void setPlayerHand(Hand playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    // Accesseur pour récupérer une carte à partir de son chemin d'image
     public Card getCard(String imagePath) {
         return cards.get(imagePath);
     }
@@ -52,28 +66,21 @@ public class CardsInteractions {
         cards.remove(imagePath);
     }
 
-    public Card getRandomCard (){
-
+    // Méthode pour récupérer une carte aléatoire et l'ajouter à la main du joueur
+    public Card getRandomCard() {
         Random random = new Random();
-        // Générer un nombre aléatoire pour la valeur de la carte (entre 1 et 13)
-        int cardValue = random.nextInt(13) + 1;
-
-        // Générer un nombre aléatoire pour la couleur parmi {c, d, h, s}
+        int cardValue = random.nextInt(13) + 1; // Valeur entre 1 et 13
         String[] suits = {"c", "d", "h", "s"};
         String cardSuit = suits[random.nextInt(suits.length)];
-
-        // Construire le nom du fichier de l'image de la carte
         String cardName = cardValue + cardSuit + ".gif";
 
-        Card randomCard = cards.get("src/images/"+cardName);
+        Card randomCard = cards.get("src/images/" + cardName);
+        
 
-        //add cards to hand every time the player pioche
-        playerHarnd.addCard(randomCard);
+        if (randomCard != null) {
+            playerHand.addCard(randomCard); // Ajout de la carte à la main du joueur
+        }
 
         return randomCard;
     }
-
-
-
-
 }

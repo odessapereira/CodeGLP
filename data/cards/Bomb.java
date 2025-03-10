@@ -1,9 +1,9 @@
 package data.cards;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Bomb extends Combinaison{
-    public Bomb(List<Card> cards) {
+    public Bomb(ArrayList<Card> cards) {
         super(cards);
     }
 

@@ -1,15 +1,15 @@
 package data.cards;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Combinaison {
-    private List<Card> cards;
+    private ArrayList<Card> cards;
 
-    public Combinaison(List<Card> cards) {
+    public Combinaison(ArrayList<Card> cards) {
         this.cards = cards;
     }
 
-    public List<Card> getCards() {
+    public ArrayList<Card> getCards() {
         return cards;
     }
 

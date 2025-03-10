@@ -1,20 +1,23 @@
 package gui;
 
-import data.cards.Serie;
+import data.cards.*;
+import engine.CardsInteractions;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class PlayerPanel extends JPanel {
 
     private JPanel cardsPanel;
-    private ArrayList<CardPanel> cardPanels;
-    private ArrayList<CardPanel> selectedCards;
-    private Serie serie;
+    private HashMap<CardPanel,Card> selectedCards;
+    private CardsInteractions ci;
+    private ArrayList <Card> cardCombianison;
+    private HashMap<CardPanel,Card> deck;
+    private JLabel labelMessage;
 
 
 
@@ -27,22 +30,34 @@ public class PlayerPanel extends JPanel {
         cardsPanel.setBackground(null);
         cardsPanel.setBorder(BorderFactory.createTitledBorder("Cartes du joueur"));
 
-        add(cardsPanel, BorderLayout.SOUTH); // Ajout du panel des cartes
-        cardPanels = new ArrayList<>();
-        selectedCards = new ArrayList<>();
+        // Création du JLabel pour afficher le message
+        labelMessage = new JLabel("combinaison : ");
+        labelMessage.setFont(new Font("Arial", Font.PLAIN, 13));
+        labelMessage.setBounds(10, 10, 200, 20);
+
+        add(cardsPanel, BorderLayout.SOUTH);// Ajout du panel des cartes
+        add(labelMessage, BorderLayout.EAST);
+        selectedCards = new HashMap<>();
+
+        ci = CardsInteractions.getInstance();
+        cardCombianison = new ArrayList<>();
+        deck = new HashMap<>();
     }
 
-    public void addCardPanel(CardPanel cardPanel) {
+    public void addCardPanel(CardPanel cardPanel, Card card ) {
         cardsPanel.add(cardPanel);
         cardsPanel.add(cardPanel);
         cardsPanel.revalidate();
         cardsPanel.repaint();
+        deck.put(cardPanel,card);
+
+
 
 //         Ajouter un écouteur de clic pour la sélection de la carte
         cardPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setSelectedCard(cardPanel); // Sélectionner la carte sur clic
+                setSelectedCard(cardPanel,deck.get(cardPanel)); // Sélectionner la carte sur clic
             }
         });
 
@@ -53,37 +68,89 @@ public class PlayerPanel extends JPanel {
 
 
 
-    public void setSelectedCard(CardPanel cardLabel) {
-        if (selectedCards.contains(cardLabel)) {
+    public void setSelectedCard(CardPanel cardLabel, Card card) {
+        if (selectedCards.containsKey(cardLabel)) {
             // Si la carte est déjà sélectionnée, la désélectionner
             cardLabel.setBorder(null);
             selectedCards.remove(cardLabel);
+
         } else {
-            // Sélectionner la nouvelle carte
-            selectedCards.add(cardLabel);
+            // Sélectionner la nouvelle carte et l'ajouter à la HashMap
+            selectedCards.put(cardLabel, card);
             cardLabel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
 
         }
+        String combinaison = " ";
+        if (isSerie(selectedCards)){
+                combinaison ="une serie";
+                labelMessage.setText("Combinaison : "+combinaison);
+        }if (isdouble(selectedCards)){
+            combinaison="double";
+            labelMessage.setText("Combinaison : "+combinaison);
+        }if (isBomb(selectedCards)){
+            combinaison="Bombe ";
+            labelMessage.setText("Combinaison : "+combinaison);
+        }
+        else {
+            labelMessage.setText("Combinaison : "+combinaison);
+        }
+
     }
 
+    public JLabel getLabelMessage() {
+        return labelMessage;
+    }
 
-    public ArrayList<CardPanel> getSelectedCards() {
+    public void setLabelMessage(JLabel labelMessage) {
+        this.labelMessage = labelMessage;
+    }
+
+    public HashMap<CardPanel,Card> getSelectedCards() {
         return selectedCards; // Retourne la carte sélectionnée
     }
 
 
     public void clearSelection() {
         if (selectedCards != null) {
-            for (CardPanel card : selectedCards) {
-                card.setBorder(null); // Retire la bordure de chaque carte sélectionnée
+            for (CardPanel cardPanel : selectedCards.keySet()) {
+                cardPanel.setBorder(null); // Retire la bordure de chaque carte sélectionnée
             }
-            selectedCards.clear(); // Vide la liste des cartes sélectionnées
+            selectedCards.clear(); // Vide la HashMap
+            labelMessage.setText("combinaison : ");
         }
+    }
+
+    public ArrayList<Card> getCardCombianison() {
+        return cardCombianison;
+    }
+
+    public boolean isSerie(HashMap<CardPanel, Card> cardCombination) {
+        ArrayList<Card> cards = new ArrayList<>(cardCombination.values()); // Récupère uniquement les cartes
+        Serie serie = new Serie(cards); // Crée une instance de Serie
+        return serie.isValid(); // Vérifie si c'est une série
+    }
+
+    public boolean isdouble(HashMap<CardPanel, Card> cardCombination) {
+        ArrayList<Card> cards = new ArrayList<>(cardCombination.values()); // Récupère uniquement les cartes
+        DoubleCard doubleCard = new DoubleCard(cards); // Crée une instance de
+        return doubleCard.isValid(); // Vérifie si c'est un double
+    }
+
+    public boolean isBomb(HashMap<CardPanel, Card> cardCombination) {
+        ArrayList<Card> cards = new ArrayList<>(cardCombination.values()); // Récupère uniquement les cartes
+        Bomb bomb = new Bomb(cards);
+        return bomb.isValid();
     }
 
 
 
-
-
-
 }
+
+
+
+
+
+
+
+
+

@@ -1,10 +1,10 @@
 package data.cards;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class DoubleCard extends Combinaison{
 
-    public DoubleCard (List<Card> cards) {
+    public DoubleCard (ArrayList<Card> cards) {
         super(cards);
 
     }
