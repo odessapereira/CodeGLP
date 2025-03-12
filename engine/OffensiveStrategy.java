@@ -1,7 +1,7 @@
-package players;
+package engine;
 
 import gui.GameGUI;
-import engine.GameEngine;
+import players.BotPlayer;
 import game.GameTable;
 import cards.Card;
 import java.util.List; 
