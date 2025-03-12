@@ -1,6 +1,6 @@
-package players;
+package engine;
 
-import engine.GameEngine;
+import players.BotPlayer;
 import game.GameTable;
 
 public interface PlayStrategy {
