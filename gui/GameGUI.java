@@ -1,7 +1,10 @@
 package gui;
 import data.cards.Card;
 import data.cards.Combinaison;
+import data.players.HumanPlayer;
+import data.players.Player;
 import engine.CardsInteractions;
+import engine.TurnManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +22,7 @@ public class GameGUI extends JFrame {
     private Stack discardPile;
     private JPanel drawPile;
     private CardsInteractions ci;
+    private TurnManager turnManager;
 
     private final Color BACKGROUND_COLOR = new Color(11, 167, 53);
     private final Color PLAYER_BACKGROUND_COLOR = new Color(34, 139, 34);
@@ -36,6 +40,7 @@ public class GameGUI extends JFrame {
         deck = new HashMap<CardPanel,Card>();
         discardPile = new Stack();
         playerArea = new PlayerPanel("You");
+
 
 
         PlayerPanel leftPanel = new PlayerPanel("bot1");
@@ -161,6 +166,7 @@ public class GameGUI extends JFrame {
 
         //ajouter la carte a la main
         ci.AddCardHand(randomCard);
+        turnManager = new TurnManager();
     }
 
 
@@ -176,8 +182,7 @@ public class GameGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             HashMap<CardPanel,Card> selectedCards = playerArea.getSelectedCards();
 
-            if (!selectedCards.isEmpty()) {
-
+            if (!selectedCards.isEmpty() && turnManager.isValidMove(new ArrayList<>(selectedCards.values()))) {
                 playCard(selectedCards); // Ajouter la carte posée dans la zone de jeu
                 playerArea.revalidate();
                 playerArea.repaint();

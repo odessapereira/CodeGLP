@@ -3,7 +3,9 @@ package engine;
 import data.cards.Card;
 import data.players.Hand;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class CardsInteractions {
@@ -30,13 +32,16 @@ public class CardsInteractions {
     private void initializeCards() {
         String[] suits = {"c", "d", "h", "s"}; // c = cœur, d = carreau, h = trèfle, s = pique
 
-        for (int number = 1; number < 15; number++) {
+        for (int number = 1; number < 14; number++) {
             for (String suit : suits) {
                 String imagePath = "src/images/" + number + suit + ".gif"; // Chemin de l'image
                 Card card = new Card(number, suit, imagePath);
                 cards.put(imagePath, card);
             }
         }
+        cards.put("src/images/joker1.jpeg",new Card(0,"joker1","src/images/joker1.jpeg"));
+        cards.put("src/images/joker2.jpeg",new Card(0,"joker2","src/images/joker2.jpeg"));
+
     }
 
     public Hand getPlayerHand() {
@@ -66,21 +71,37 @@ public class CardsInteractions {
         cards.remove(imagePath);
     }
 
+
     // Méthode pour récupérer une carte aléatoire et l'ajouter à la main du joueur
     public Card getRandomCard() {
-        Random random = new Random();
-        int cardValue = random.nextInt(13) + 1; // Valeur entre 1 et 13
-        String[] suits = {"c", "d", "h", "s"};
-        String cardSuit = suits[random.nextInt(suits.length)];
-        String cardName = cardValue + cardSuit + ".gif";
 
-        Card randomCard = cards.get("src/images/" + cardName);
-        
-
-        if (randomCard != null) {
-            playerHand.addCard(randomCard); // Ajout de la carte à la main du joueur
+        // Vérifie si la HashMap est vide
+        if (cards.isEmpty()) {
+            return null; // ou lever une exception selon le besoin
         }
+
+        // Créer une liste de clés (les chemins des images)
+        List<String> keys = new ArrayList<>(cards.keySet());
+
+        // Sélectionner un index aléatoire
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(keys.size());
+
+        // Récupérer la clé (chemin de l'image) correspondant à l'index aléatoire
+        String randomKey = keys.get(randomIndex);
+
+        // Récupérer la carte correspondante à cette clé
+        Card randomCard = cards.get(randomKey);
+
+
+
+        // Supprimer la carte de la HashMap
+        cards.remove(randomKey);
+
 
         return randomCard;
     }
+
+
+
 }

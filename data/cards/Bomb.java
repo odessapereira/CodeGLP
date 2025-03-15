@@ -1,6 +1,8 @@
 package data.cards;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bomb extends Combinaison{
     public Bomb(ArrayList<Card> cards) {
@@ -9,15 +11,28 @@ public class Bomb extends Combinaison{
 
     @Override
     public boolean isValid() {
-        if (getCards().size() < 4) return false; // A bomb must have at least 4 cards
+        if (getCards().size() < 4) return false; // Une bombe doit contenir au moins 4 cartes
 
-        int value = getCards().get(0).getNumber();
+        int jokerCount = 0;
+        Map<Integer, Integer> cardCounts = new HashMap<>();
+
+        // Compter les occurrences de chaque valeur de carte et les jokers
         for (Card card : getCards()) {
-            if (card.getNumber() != value) {
-                return false;
+            if (card.isJoker(card)) {
+                jokerCount++;
+            } else {
+                cardCounts.put(card.getNumber(), cardCounts.getOrDefault(card.getNumber(), 0) + 1);
             }
         }
-        return true;
+
+        // Vérifier s'il existe une valeur qui peut former une bombe avec les jokers
+        for (Map.Entry<Integer, Integer> entry : cardCounts.entrySet()) {
+            if (entry.getValue() + jokerCount == getCards().size()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

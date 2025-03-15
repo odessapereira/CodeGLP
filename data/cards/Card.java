@@ -25,6 +25,10 @@ public class Card{
     return imagePath;
 }
 
+    // Méthode pour vérifier si une carte est un joker
+    public boolean isJoker(Card card) {
+        return card.getNumber() == 0 && (card.getColor().equals("joker1") || card.getColor().equals("joker2"));
+    }
 
     @Override
     public String toString() {

@@ -3,7 +3,6 @@ package data.cards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class Serie extends Combinaison {
 
@@ -13,26 +12,44 @@ public class Serie extends Combinaison {
 
     @Override
     public boolean isValid() {
-        List<Card> cards = getCards(); // Récupérer la liste des cartes
-
-        if (cards.size() < 3) return false; // Au moins 3 cartes requises
+        if (getCards().size() < 3) return false; // Une série doit contenir au moins 3 cartes
 
         // Trier les cartes par ordre croissant de numéro
-        Collections.sort(cards, Comparator.comparingInt(Card::getNumber));
+        getCards().sort(Comparator.comparingInt(Card::getNumber));
 
-        int expectedNumber = cards.get(0).getNumber(); // Numéro attendu (début de la séquence)
+        int jokerCount = 0;  // Nombre de jokers dans la série
+        int previousNumber = -1; // Le numéro de la dernière carte (pour comparer)
+        boolean firstCard = true;
 
-        // Vérification de la séquence
-        for (int i = 1; i < cards.size(); i++) {
-            Card currentCard = cards.get(i);
-            if ( currentCard.getNumber() != expectedNumber + 1) {
-                return false; // rupture de séquence
+        for (Card card : getCards()) {
+            if (card.isJoker(card)) {
+                jokerCount++; // Compter les jokers
+                continue;
             }
-            expectedNumber++; // Passer au prochain numéro attendu
-        }
 
-        return true; // Si toutes les conditions sont remplies, c'est une série valide
+            if (firstCard) {
+                previousNumber = card.getNumber(); // Première carte non joker
+                firstCard = false;
+                continue;
+            }
+
+            int gap = card.getNumber() - previousNumber; // Différence entre les cartes
+
+            if (gap == 0) {
+                return false; // Deux cartes de même valeur ne peuvent pas être dans une série
+            } else if (gap == 1) {
+                previousNumber = card.getNumber(); // Séquence correcte, on continue
+            } else if (gap - 1 <= jokerCount) {
+                // On peut combler l'écart avec des jokers
+                jokerCount -= (gap - 1);
+                previousNumber = card.getNumber(); // Mise à jour de la séquence
+            } else {
+                return false; // Impossible de combler l'écart
+            }
+        }
+        return true;
     }
+
 
 
     @Override

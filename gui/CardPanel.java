@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-class CardPanel extends JPanel {
+public class CardPanel extends JPanel {
     private Image image;
     private static String hiddenCard="./images/hidenCard.jpeg";
     private CardsInteractions ci;

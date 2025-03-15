@@ -21,6 +21,8 @@ public class PlayerPanel extends JPanel {
 
 
 
+
+
     public PlayerPanel(String playerName) {
         setLayout(new BorderLayout());
         cardsPanel = new JPanel();
@@ -39,9 +41,10 @@ public class PlayerPanel extends JPanel {
         add(labelMessage, BorderLayout.EAST);
         selectedCards = new HashMap<>();
 
-        ci = CardsInteractions.getInstance();
+
         cardCombianison = new ArrayList<>();
         deck = new HashMap<>();
+
     }
 
     public void addCardPanel(CardPanel cardPanel, Card card ) {
@@ -101,15 +104,9 @@ public class PlayerPanel extends JPanel {
             labelMessage.setText("Combinaison : "+combinaison);
         }
 
+
     }
 
-    public JLabel getLabelMessage() {
-        return labelMessage;
-    }
-
-    public void setLabelMessage(JLabel labelMessage) {
-        this.labelMessage = labelMessage;
-    }
 
     public HashMap<CardPanel,Card> getSelectedCards() {
         return selectedCards; // Retourne la carte sélectionnée
@@ -129,6 +126,6 @@ public class PlayerPanel extends JPanel {
     public ArrayList<Card> getCardCombianison() {
         return cardCombianison;
     }
-    
+
 
 }

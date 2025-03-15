@@ -1,9 +1,13 @@
 package engine;
 
+import data.cards.Bomb;
+import data.cards.Card;
+import data.cards.DoubleCard;
+import data.cards.Serie;
 import data.players.Player;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class TurnManager {
     private List<Player> players;
@@ -16,7 +20,39 @@ public class TurnManager {
         this.gameOver = false;
     }
 
-    /**
+    public TurnManager (){
+        this.currentPlayerIndex = 0;
+        this.gameOver = false;
+    }
+
+    public boolean isValidMove(ArrayList<Card> selectedCards) {
+        if (selectedCards.isEmpty()) {
+            return false; // Aucune carte sélectionnée
+        }
+
+        // Vérifier si le joueur tente de poser un joker seul
+        for (Card card : selectedCards) {
+            if (card.isJoker(card)) {
+                return false; // Un joker ne peut pas être posé seul
+            }
+        }
+
+        Serie serie = new Serie(selectedCards);
+        Bomb bomb = new Bomb(selectedCards);
+        DoubleCard doubleCards = new DoubleCard(selectedCards);
+
+        if (serie.isValid() || bomb.isValid() || doubleCards.isValid()){
+            return true;
+        }
+
+        // Si ce n'est pas une combinaison, les cartes doivent être posées individuellement
+        return selectedCards.size() == 1; // Un joueur peut poser une seule carte non-joker
+    }
+
+
+
+
+/**
      * Démarre un tour pour le joueur actuel.
      */
     public void startTurn() {
