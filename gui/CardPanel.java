@@ -25,4 +25,10 @@ public class CardPanel extends JPanel {
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
         }
     }
+
+    public void rotateCard(int angle) {
+        Graphics2D g2d = (Graphics2D) this.getGraphics();
+        g2d.rotate(Math.toRadians(angle), getWidth() / 2, getHeight() / 2);
+        repaint();
+    }
 }

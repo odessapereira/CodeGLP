@@ -1,6 +1,7 @@
 package gui;
 import data.cards.Card;
 import data.cards.Combinaison;
+import data.players.Hand;
 import data.players.HumanPlayer;
 import data.players.Player;
 import engine.CardsInteractions;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
 
 public class GameGUI extends JFrame {
@@ -23,10 +25,13 @@ public class GameGUI extends JFrame {
     private JPanel drawPile;
     private CardsInteractions ci;
     private TurnManager turnManager;
+    private BotPanel leftBotPanel;
+    private BotPanel topBotPanel;
+    private BotPanel rightBotPanel;
+
 
     private final Color BACKGROUND_COLOR = new Color(11, 167, 53);
     private final Color PLAYER_BACKGROUND_COLOR = new Color(34, 139, 34);
-    private final Color TABLE_BACKGROUND_COLOR = new Color(18, 124, 18, 218);
 
     public static final Dimension CARD_DIMENSION = new Dimension(71,99);
 
@@ -42,37 +47,38 @@ public class GameGUI extends JFrame {
         playerArea = new PlayerPanel("You");
 
 
+        leftBotPanel = new BotPanel(1);   // Bot à gauche
+        rightBotPanel = new BotPanel(2);  // Bot à droite
+        topBotPanel = new BotPanel(3);    // Bot en haut
 
-        PlayerPanel leftPanel = new PlayerPanel("bot1");
-        PlayerPanel rightPanel = new PlayerPanel("bot2");
-        PlayerPanel northPanel = new PlayerPanel("bot3");
 
-        add(leftPanel, BorderLayout.WEST);
-        add(rightPanel, BorderLayout.EAST);
-        add(northPanel, BorderLayout.NORTH);
+        add(leftBotPanel, BorderLayout.WEST);
+        add(rightBotPanel, BorderLayout.EAST);
+        add(topBotPanel, BorderLayout.NORTH);
         add(playerArea, BorderLayout.SOUTH);
 
-        // Left Panel
-        leftPanel.setBackground(BACKGROUND_COLOR);
-        leftPanel.setBorder(BorderFactory.createTitledBorder("Bot 1"));
-        leftPanel.setPreferredSize(new Dimension(200, 200));
-        leftPanel.setLayout(new BorderLayout());
+//         Left Panel
+        leftBotPanel.setBackground(BACKGROUND_COLOR);
+//        botPanel.setBorder(BorderFactory.createTitledBorder("Bot 1"));
+//        botPanel.setPreferredSize(new Dimension(200, 200));
+//        botPanel.setLayout(new BorderLayout());
+
 
         // Right Panel
-        rightPanel.setBackground(BACKGROUND_COLOR);
-        rightPanel.setBorder(BorderFactory.createTitledBorder("Bot 2"));
-        rightPanel.setPreferredSize(new Dimension(200, 200));
-        rightPanel.setLayout(new BorderLayout());
+        rightBotPanel.setBackground(BACKGROUND_COLOR);
+//        rightBot.setBorder(BorderFactory.createTitledBorder("Bot 2"));
+//        rightBot.setPreferredSize(new Dimension(200, 200));
+//        rightBot.setLayout(new BorderLayout());
 
         // North Panel
-        northPanel.setBackground(BACKGROUND_COLOR);
-        northPanel.setBorder(BorderFactory.createTitledBorder("Bot 3"));
-        northPanel.setPreferredSize(new Dimension(200, 200));
-        northPanel.setLayout(new BorderLayout());
+        topBotPanel.setBackground(BACKGROUND_COLOR);
+//        topBot.setBorder(BorderFactory.createTitledBorder("Bot 3"));
+//        topBot.setPreferredSize(new Dimension(200, 200));
+//        topBot.setLayout(new BorderLayout());
 
         // South Panel
         playerArea.setBackground(BACKGROUND_COLOR);
-//        playerArea.setBorder(BorderFactory.createTitledBorder("Cartes du joueur"));
+
 
         // Positionner en haut à gauche
 
@@ -81,7 +87,7 @@ public class GameGUI extends JFrame {
         controlPanel.setBackground(null);
         playerArea.add(controlPanel, BorderLayout.NORTH);
         playerArea.setBackground(PLAYER_BACKGROUND_COLOR);
-//        playerArea.add(labelMessage, BorderLayout.EAST);
+
 
 
 
@@ -138,6 +144,7 @@ public class GameGUI extends JFrame {
         tablePanel.add(playArea, BorderLayout.CENTER);
 
 
+
         JButton poser = new JButton("Poser");
         JButton piocher = new JButton("Piocher");
         controlPanel.add(poser);
@@ -168,6 +175,7 @@ public class GameGUI extends JFrame {
         ci.AddCardHand(randomCard);
         turnManager = new TurnManager();
     }
+
 
 
     class PiocherAction implements ActionListener {
@@ -202,12 +210,9 @@ public class GameGUI extends JFrame {
         discardPileContainer.repaint();
     }
 
-
-
-
-
-
-
+    public PlayerPanel getPlayerArea() {
+        return playerArea;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GameGUI::new);
