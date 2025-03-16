@@ -155,6 +155,7 @@ public class GameGUI extends JFrame {
 
 
         setVisible(true);
+        distributeCards();
     }
     private JLabel setLabelMessage(){
         return setLabelMessage();
@@ -176,6 +177,30 @@ public class GameGUI extends JFrame {
         turnManager = new TurnManager();
     }
 
+ // Méthode pour tirer une carte pour un bot spécifique
+    private void drawCardForBot(BotPanel botPanel) {
+        // Récupère une carte aléatoire du gestionnaire de cartes
+        Card randomCard = ci.getRandomCard();
+
+        if (randomCard != null) {
+            // Crée un CardPanel pour afficher la carte
+            CardPanel cardPanel = new CardPanel(randomCard.getImagePath()); 
+
+            // Retirer la carte du draw pile (ou deck)
+            ci.removeCard(randomCard.getImagePath());
+
+            // Ajoute le CardPanel et la carte au deck du bot
+            deck.put(cardPanel, randomCard); 
+
+            // Ajoute le cardPanel au BotPanel pour l'affichage
+            botPanel.addCardPanel(cardPanel, randomCard); 
+            botPanel.revalidate();
+            botPanel.repaint();
+
+            // Ajouter la carte à la main du bot dans CardsInteractions
+            ci.AddCardHand(randomCard);
+        }
+    }
 
 
     class PiocherAction implements ActionListener {
@@ -198,6 +223,23 @@ public class GameGUI extends JFrame {
             }
         }
     }
+    /**
+     * Distribue les cartes aux bots et au joueur au début du jeu.
+     */
+    private void distributeCards() {
+        int nbCartesParJoueur = 5; // Nombre de cartes initiales par joueur
+
+        for (int i = 0; i < nbCartesParJoueur; i++) {
+            // Distribuer une carte au joueur
+            drawCard();  
+
+            // Distribuer une carte aux bots
+            drawCardForBot(leftBotPanel);
+            drawCardForBot(rightBotPanel);
+            drawCardForBot(topBotPanel);
+        }
+    }
+
 
     private void playCard(HashMap<CardPanel, Card> selectedCards) {
         discardPileContainer.removeAll(); // Vide la pile de défausse
