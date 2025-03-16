@@ -32,7 +32,7 @@ public class TurnManager {
 
         // Vérifier si le joueur tente de poser un joker seul
         for (Card card : selectedCards) {
-            if (card.isJoker(card)) {
+            if (card.isJoker(card) && selectedCards.size()==1) {
                 return false; // Un joker ne peut pas être posé seul
             }
         }

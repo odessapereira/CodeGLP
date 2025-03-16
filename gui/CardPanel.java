@@ -26,9 +26,4 @@ public class CardPanel extends JPanel {
         }
     }
 
-    public void rotateCard(int angle) {
-        Graphics2D g2d = (Graphics2D) this.getGraphics();
-        g2d.rotate(Math.toRadians(angle), getWidth() / 2, getHeight() / 2);
-        repaint();
-    }
 }

@@ -6,8 +6,8 @@ import java.util.List;
 
 public class HumanPlayer extends Player{
 
-    public HumanPlayer(String name, List<Card> hand, int jackpot) {
-        super(name, hand, jackpot);
+    public HumanPlayer(String name, List<Card> hand) {
+        super(name, hand);
     }
 
     @Override

@@ -1,10 +1,11 @@
 package gui;
 import data.cards.Card;
-import data.cards.Combinaison;
-import data.players.Hand;
+
+import data.players.BotPlayer;
 import data.players.HumanPlayer;
 import data.players.Player;
 import engine.CardsInteractions;
+import engine.GameEngine;
 import engine.TurnManager;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
+
 
 
 public class GameGUI extends JFrame {
@@ -56,6 +58,16 @@ public class GameGUI extends JFrame {
         add(rightBotPanel, BorderLayout.EAST);
         add(topBotPanel, BorderLayout.NORTH);
         add(playerArea, BorderLayout.SOUTH);
+
+        List<Player> players = new ArrayList<>();
+        players.add(new HumanPlayer("you",null));
+        players.add(new BotPlayer("Bot 1",null));
+        players.add(new BotPlayer("Bot 2",null));
+        players.add(new BotPlayer("Bot 3",null));
+
+        GameEngine gameEngine = new GameEngine(players, this, deck);
+        gameEngine.initializeGame();
+        turnManager = new TurnManager(players);
 
 //         Left Panel
         leftBotPanel.setBackground(BACKGROUND_COLOR);
@@ -155,7 +167,6 @@ public class GameGUI extends JFrame {
 
 
         setVisible(true);
-        distributeCards();
     }
     private JLabel setLabelMessage(){
         return setLabelMessage();
@@ -174,26 +185,25 @@ public class GameGUI extends JFrame {
 
         //ajouter la carte a la main
         ci.AddCardHand(randomCard);
-        turnManager = new TurnManager();
     }
 
- // Méthode pour tirer une carte pour un bot spécifique
+    // Méthode pour tirer une carte pour un bot spécifique
     private void drawCardForBot(BotPanel botPanel) {
         // Récupère une carte aléatoire du gestionnaire de cartes
         Card randomCard = ci.getRandomCard();
 
         if (randomCard != null) {
             // Crée un CardPanel pour afficher la carte
-            CardPanel cardPanel = new CardPanel(randomCard.getImagePath()); 
+            CardPanel cardPanel = new CardPanel(randomCard.getImagePath());
 
             // Retirer la carte du draw pile (ou deck)
             ci.removeCard(randomCard.getImagePath());
 
             // Ajoute le CardPanel et la carte au deck du bot
-            deck.put(cardPanel, randomCard); 
+            deck.put(cardPanel, randomCard);
 
             // Ajoute le cardPanel au BotPanel pour l'affichage
-            botPanel.addCardPanel(cardPanel, randomCard); 
+            botPanel.addCardPanel(cardPanel, randomCard);
             botPanel.revalidate();
             botPanel.repaint();
 
@@ -223,22 +233,7 @@ public class GameGUI extends JFrame {
             }
         }
     }
-    /**
-     * Distribue les cartes aux bots et au joueur au début du jeu.
-     */
-    private void distributeCards() {
-        int nbCartesParJoueur = 5; // Nombre de cartes initiales par joueur
 
-        for (int i = 0; i < nbCartesParJoueur; i++) {
-            // Distribuer une carte au joueur
-            drawCard();  
-
-            // Distribuer une carte aux bots
-            drawCardForBot(leftBotPanel);
-            drawCardForBot(rightBotPanel);
-            drawCardForBot(topBotPanel);
-        }
-    }
 
 
     private void playCard(HashMap<CardPanel, Card> selectedCards) {
@@ -254,6 +249,18 @@ public class GameGUI extends JFrame {
 
     public PlayerPanel getPlayerArea() {
         return playerArea;
+    }
+
+    public BotPanel getLeftBotPanel() {
+        return leftBotPanel;
+    }
+
+    public BotPanel getRightBotPanel() {
+        return rightBotPanel;
+    }
+
+    public BotPanel getTopBotPanel() {
+        return topBotPanel;
     }
 
     public static void main(String[] args) {

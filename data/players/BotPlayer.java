@@ -9,8 +9,8 @@ import java.util.Random;
 public class BotPlayer extends Player {
 
     // Constructor that initializes the bot with a name, hand, and jackpot
-    public BotPlayer(String name,List<Card> hand, int jackpot) {
-        super(name,hand, jackpot);
+    public BotPlayer(String name,List<Card> hand) {
+        super(name,hand);
     }
 
 

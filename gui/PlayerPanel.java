@@ -49,7 +49,6 @@ public class PlayerPanel extends JPanel {
 
     public void addCardPanel(CardPanel cardPanel, Card card ) {
         cardsPanel.add(cardPanel);
-        cardsPanel.add(cardPanel);
         cardsPanel.revalidate();
         cardsPanel.repaint();
         deck.put(cardPanel,card);
