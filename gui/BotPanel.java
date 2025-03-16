@@ -54,13 +54,13 @@ public class BotPanel extends JPanel {
 
 
     public void addCardPanel(CardPanel cardPanel, Card card) {
-        if (botId == 1) {
+        /*if (botId == 1) {
             cardPanel.rotateCard(-90);  // Rotation pour affichage vertical
         } else if (botId == 2) {
             cardPanel.rotateCard(90);
         } else if (botId == 3) {
             cardPanel.rotateCard(0); // Pas besoin de rotation
-        }
+        }*/
 
         cardsPanel.add(cardPanel);
         cardsPanel.revalidate();
