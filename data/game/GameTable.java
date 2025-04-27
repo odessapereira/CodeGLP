@@ -1,75 +1,53 @@
 package data.game;
 
-import data.cards.Card;
 import data.players.Player;
 
+import java.util.ArrayList;
+
+/**
+ * Represents the game table, which holds the players, the draw pile, and the discard pile.
+ *
+ * Author: Nadjib-M Fariza-A Odessa-T-P
+ */
 public class GameTable {
 
-    private Player player;
-    private DrawPile drawPile;
-    private DiscardPile discardPile;
+    private ArrayList<Player> players; // List of players in the game
+    private DrawPile drawPile; // The pile of cards to be drawn
+    private DiscardPile discardPile; // The pile of cards that have been discarded
 
-    // Constructor to initialize the game table with a player, draw pile, and discard pile
-    public GameTable(Player player, DrawPile drawPile, DiscardPile discardPile) {
-        this.player = player;
-        this.drawPile = drawPile;
-        this.discardPile = discardPile;
+    /**
+     * Constructor to initialize the game table with a list of players, a draw pile, and a discard pile.
+     *
+     * @param players The list of players in the game.
+     * @param drawPile The draw pile containing the available cards.
+     * @param discardPile The discard pile containing the discarded cards.
+     */
+    public GameTable(ArrayList<Player> players, DrawPile drawPile, DiscardPile discardPile) {
+        this.players = players; // Set the players for the game
+        this.drawPile = drawPile; // Set the draw pile
+        this.discardPile = discardPile; // Set the discard pile
     }
 
-    // Method to start the game or perform game-related operations
-    public void startGame() {
-        // Initialize the game (shuffle, distribute cards, etc.)
-        drawPile.shuffle();
-        // Other game setup tasks can be added here
-    }
+    /**
+     * Default constructor for the GameTable class.
+     */
+    public GameTable() {}
 
-    // Method for the player to draw a card from the draw pile
-    public void playerDrawCard() {
-        Card drawnCard = drawPile.drawCard();
-        if (drawnCard != null) {
-            player.addCardToHand(drawnCard);
-            System.out.println("Player drew a card: " + drawnCard);
-        } else {
-            System.out.println("The draw pile is empty!");
-        }
-    }
-
-    // Method for the player to discard a card to the discard pile
-    public void playerDiscardCard(Card card) {
-        discardPile.addCard(card);
-        System.out.println("Player discarded a card: " + card);
-    }
-
-    // Getters and setters for the attributes
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public DrawPile getDrawPile() {
-        return drawPile;
-    }
-
-    public void setDrawPile(DrawPile drawPile) {
-        this.drawPile = drawPile;
-    }
-
+    /**
+     * Gets the discard pile of the game table.
+     *
+     * @return The discard pile.
+     */
     public DiscardPile getDiscardPile() {
-        return discardPile;
+        return discardPile; // Return the discard pile
     }
 
+    /**
+     * Sets the discard pile for the game table.
+     *
+     * @param discardPile The discard pile to set.
+     */
     public void setDiscardPile(DiscardPile discardPile) {
-        this.discardPile = discardPile;
-    }
-
-    @Override
-    public String toString() {
-        return "GameTable {" +
-                "Player: " + player + ", " +
-                "DrawPile: " + drawPile + ", " + " }";
-
+        this.discardPile = discardPile; // Set the discard pile
     }
 }

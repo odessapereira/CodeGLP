@@ -1,63 +1,81 @@
 package data.game;
 
 import data.cards.Card;
+import java.util.HashMap;
 
-import java.util.Collections;
-import java.util.Stack;
-
+/**
+ * Represents the draw pile in the game, which holds the cards available to be drawn.
+ *
+ * Author: Nadjib-M Fariza-A Odessa-T-P
+ */
 public class DrawPile {
 
-    // The unique instance of the DrawPile
-    private static DrawPile instance;
+    // Map for cards and their imagePath
+    private HashMap<String, Card> drawCards;
 
-    // The stack of cards
-    private Stack<Card> drawCards;
-
-    // Private constructor to prevent the creation of other instances
-    private DrawPile() {
-        this.drawCards = new Stack<>();
+    /**
+     * Constructor for the DrawPile class.
+     * Initializes the draw pile as an empty HashMap.
+     */
+    public DrawPile() {
+        this.drawCards = new HashMap<>();
     }
 
-    // Method to get the unique instance of DrawPile
-    public static DrawPile getInstance() {
-        if (instance == null) {
-            instance = new DrawPile();
-        }
-        return instance;
+    /**
+     * Gets a copy of the remaining cards in the pile.
+     *
+     * @return A copy of the remaining cards in the draw pile.
+     */
+    public HashMap<String, Card> getRemainingCards() {
+        return (HashMap<String, Card>) drawCards.clone(); // Return a clone to prevent external modifications
     }
 
-    // Add cards to the pile (This should only be done when initializing the pile, not during gameplay)
-    public void initializeCards(Stack<Card> cards) {
-        drawCards.addAll(cards);
+    /**
+     * Retrieves a card from the draw pile based on the imagePath.
+     *
+     * @param imagePath The image path associated with the card.
+     * @return The card corresponding to the given imagePath, or null if not found.
+     */
+    public Card getCard(String imagePath) {
+        return drawCards.get(imagePath); // Retrieve the card associated with the image path
     }
 
-//    // Shuffle the cards in the pile
-//    public void shuffle() {
-//        Collections.shuffle(drawCards);
-//    }
-
-    // Draw a card from the pile
-    public Card drawCard() {
-        return drawCards.isEmpty() ? null : drawCards.pop();
+    /**
+     * Removes a card from the draw pile based on the imagePath.
+     *
+     * @param imagePath The image path associated with the card to remove.
+     */
+    public void removeCard(String imagePath) {
+        drawCards.remove(imagePath); // Remove the card from the draw pile
     }
 
-    // Get a copy of the remaining cards in the pile
-    public Stack<Card> getRemainingCards() {
-        return (Stack<Card>) drawCards.clone();
+    /**
+     * Gets the entire draw pile.
+     *
+     * @return The draw pile as a HashMap of image paths to cards.
+     */
+    public HashMap<String, Card> getDrawCards() {
+        return drawCards; // Return the draw pile HashMap
     }
 
-    // Check if the pile is empty
+    /**
+     * Checks if the draw pile is empty.
+     *
+     * @return true if the draw pile is empty, false otherwise.
+     */
     public boolean isEmpty() {
-        return drawCards.isEmpty();
+        return drawCards.isEmpty(); // Check if the draw pile is empty
     }
 
-    // Clear the pile (should be used only when resetting the pile)
-//    public void clear() {
-//        drawCards.clear();
-//    }
-
-    @Override
-    public String toString() {
-        return "DrawPile: " + drawCards;
+    /**
+     * Adds a card to the draw pile.
+     *
+     * @param imagePath The image path associated with the card.
+     * @param card The card to be added to the draw pile.
+     */
+    public void addCard(String imagePath, Card card) {
+        if (card != null) { // Check to avoid adding a null card
+            drawCards.put(imagePath, card); // Add the card to the draw pile
+        }
     }
 }

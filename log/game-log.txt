@@ -1,0 +1,61 @@
+[19:17:34] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:17:34] INFO  engine.GameEngine - [BOT] Normal Bot (bot 2) played: [data.cards.Card@2805218d, data.cards.Card@31aa13a5, data.cards.Card@19e7ebbd]
+[19:17:36] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:17:36] WARN  engine.GameEngine - [BOT] Adventurer Bot (bot 3) passed their turn (no valid combination found).
+[19:17:41] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:17:42] INFO  engine.GameEngine - [BOT] Start of Reserved Bot (bot 1)'s turn.
+[19:17:42] WARN  engine.GameEngine - [BOT] Reserved Bot (bot 1) passed their turn (no valid combination found).
+[19:17:44] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:17:44] WARN  engine.GameEngine - [BOT] Normal Bot (bot 2) passed their turn (no valid combination found).
+[19:17:46] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:17:47] INFO  engine.GameEngine - [BOT] Normal Bot (bot 2) played: [data.cards.Card@7cd701c8]
+[19:17:48] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:17:48] WARN  engine.GameEngine - [BOT] Adventurer Bot (bot 3) passed their turn (no valid combination found).
+[19:17:52] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:17:52] INFO  engine.GameEngine - [HUMAN] Played cards: [data.cards.Card@b360457]
+[19:17:54] INFO  engine.GameEngine - [BOT] Start of Reserved Bot (bot 1)'s turn.
+[19:17:54] INFO  engine.GameEngine - [BOT] Reserved Bot (bot 1) played: [data.cards.Card@6bb15d48]
+[19:17:56] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:17:56] WARN  engine.GameEngine - [BOT] Normal Bot (bot 2) passed their turn (no valid combination found).
+[19:17:58] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:17:58] WARN  engine.GameEngine - [BOT] Adventurer Bot (bot 3) passed their turn (no valid combination found).
+[19:18:01] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:18:01] INFO  engine.GameEngine - [HUMAN] Played cards: [data.cards.Card@27370c0f, data.cards.Card@1c98b002, data.cards.Card@ce5431a]
+[19:18:03] INFO  engine.GameEngine - [BOT] Start of Reserved Bot (bot 1)'s turn.
+[19:18:03] WARN  engine.GameEngine - [BOT] Reserved Bot (bot 1) passed their turn (no valid combination found).
+[19:18:04] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:18:04] WARN  engine.GameEngine - [BOT] Normal Bot (bot 2) passed their turn (no valid combination found).
+[19:18:06] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:18:06] WARN  engine.GameEngine - [BOT] Adventurer Bot (bot 3) passed their turn (no valid combination found).
+[19:18:08] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:18:12] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:18:12] INFO  engine.GameEngine - [HUMAN] Played cards: [data.cards.Card@4eb26d98]
+[19:18:14] INFO  engine.GameEngine - [BOT] Start of Reserved Bot (bot 1)'s turn.
+[19:18:14] WARN  engine.GameEngine - [BOT] Reserved Bot (bot 1) passed their turn (no valid combination found).
+[19:18:16] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:18:16] WARN  engine.GameEngine - [BOT] Normal Bot (bot 2) passed their turn (no valid combination found).
+[19:18:17] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:18:17] WARN  engine.GameEngine - [BOT] Adventurer Bot (bot 3) passed their turn (no valid combination found).
+[19:19:31] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:19:35] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:19:35] INFO  engine.GameEngine - [HUMAN] Played cards: [data.cards.Card@366c0991]
+[19:19:36] INFO  engine.GameEngine - [BOT] Start of Reserved Bot (bot 1)'s turn.
+[19:19:36] INFO  engine.GameEngine - [BOT] Reserved Bot (bot 1) played: [data.cards.Card@1bc01e72]
+[19:19:38] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:19:38] WARN  engine.GameEngine - [BOT] Normal Bot (bot 2) passed their turn (no valid combination found).
+[19:19:40] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:19:40] INFO  engine.GameEngine - [BOT] Adventurer Bot (bot 3) played: [data.cards.Card@7618816d]
+[19:19:42] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:19:42] INFO  engine.GameEngine - [HUMAN] Played cards: [data.cards.Card@73eae4d7]
+[19:19:43] INFO  engine.GameEngine - [BOT] Start of Reserved Bot (bot 1)'s turn.
+[19:19:43] WARN  engine.GameEngine - [BOT] Reserved Bot (bot 1) passed their turn (no valid combination found).
+[19:19:45] INFO  engine.GameEngine - [BOT] Start of Normal Bot (bot 2)'s turn.
+[19:19:45] INFO  engine.GameEngine - [BOT] Normal Bot (bot 2) played: [data.cards.Card@a0411a1]
+[19:19:47] INFO  engine.GameEngine - [BOT] Start of Adventurer Bot (bot 3)'s turn.
+[19:19:47] INFO  engine.GameEngine - [BOT] Adventurer Bot (bot 3) played: [data.cards.Card@41332791]
+[19:19:50] INFO  engine.GameEngine - [HUMAN] Start of the human player's turn.
+[19:19:50] INFO  engine.GameEngine - [HUMAN] Played cards: [data.cards.Card@4bba6e31]
+[19:19:50] WARN  engine.GameEngine - engine.strategy.BotPlayer@35981e31 has lost the game
+[19:19:50] WARN  engine.GameEngine - engine.strategy.BotPlayer@1fbb883a has lost the game
+[19:19:50] WARN  engine.GameEngine - engine.strategy.BotPlayer@7ad779d1 has lost the game
+[19:19:50] WARN  engine.GameEngine - human player has won the game

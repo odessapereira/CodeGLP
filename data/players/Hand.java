@@ -2,55 +2,83 @@ package data.players;
 
 import data.cards.Card;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Represents a player's hand, which contains a list of cards the player currently holds.
+ *
+ * Author: Nadjib-M Fariza-A Odessa-T-P
+ */
 public class Hand {
-    private List<Card> cards; // List of cards in the player's hand
+    private ArrayList<Card> cards; // List of cards in the player's hand
 
+    /**
+     * Default constructor for the Hand class. Initializes an empty hand.
+     */
     public Hand() {
-        this.cards = new ArrayList<>();
+        this.cards = new ArrayList<>(); // Initialize the hand as an empty list
     }
 
-    // Add a card to the hand
+    /**
+     * Constructor to initialize the hand with a specific list of cards.
+     *
+     * @param cards The list of cards to initialize the hand.
+     */
+    public Hand(ArrayList<Card> cards) {
+        this.cards = cards; // Set the cards for the hand
+    }
+
+    /**
+     * Adds a card to the player's hand.
+     *
+     * @param card The card to add to the hand.
+     */
     public void addCard(Card card) {
-        cards.add(card);
+        cards.add(card); // Add the card to the hand
     }
 
-    // Remove a card from the hand
+    /**
+     * Removes a card from the player's hand.
+     *
+     * @param card The card to remove from the hand.
+     * @return true if the card was successfully removed, false otherwise.
+     */
     public boolean removeCard(Card card) {
-        return cards.remove(card);
+        return cards.remove(card); // Remove the card from the hand and return whether the operation was successful
     }
 
-    // Play a card (returns the card and removes it from the hand)
-    public Card playCard(int index) {
-        if (index >= 0 && index < cards.size()) {
-            return cards.remove(index);
-        }
-        System.out.println("❌ Invalid index!");
-        return null;
+    /**
+     * Sets the list of cards in the hand.
+     *
+     * @param cards The new list of cards to set for the hand.
+     */
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards; // Set the new list of cards
     }
 
-    // Check if the hand is empty
+    /**
+     * Checks if the hand is empty.
+     *
+     * @return true if the hand is empty, false otherwise.
+     */
     public boolean isEmpty() {
-        return cards.isEmpty();
+        return cards.isEmpty(); // Return whether the hand is empty
     }
 
-    // Get the number of remaining cards
-    public int getCardCount() {
-        return cards.size();
+    /**
+     * Gets the list of cards in the player's hand.
+     *
+     * @return A copy of the list of cards in the hand to prevent external modifications.
+     */
+    public ArrayList<Card> getCards() {
+        return new ArrayList<>(cards); // Return a copy of the cards to avoid external modifications
     }
 
-
-    // Get the list of cards in hand
-    public List<Card> getCards() {
-        return new ArrayList<>(cards); // Returns a copy to avoid external modifications
-    }
-
-    // Display the cards in hand
-    public void displayHand() {
-        System.out.println("🃏 Cards in hand:");
-        for (int i = 0; i < cards.size(); i++) {
-            System.out.println((i + 1) + ". " + cards.get(i));
-        }
+    /**
+     * Gets the number of cards in the player's hand.
+     *
+     * @return The size of the hand.
+     */
+    public int size() {
+        return cards.size(); // Return the number of cards in the hand
     }
 }
